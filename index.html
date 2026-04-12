@@ -1,9 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="https://schema.org/WebSite">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Anycast — Headcount you deploy in minutes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>Anycast — AI-Powered Digital Headcount | Deploy Team Members in Minutes</title>
+<meta name="description" content="Anycast deploys AI-powered team members for your business. Not software to learn — headcount that works. Banking, Healthcare, Insurance, Compliance, and more.">
+<meta name="keywords" content="AI headcount, digital employees, AI automation, compliance automation, banking AI, healthcare AI, insurance AI, AI team members">
+<meta name="author" content="ExCom AI">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://anycast.ai">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Anycast — Run like a 20-person operation. Stay a 5-person company.">
+<meta property="og:description" content="Deploy AI-powered team members in minutes. Not software you implement in months.">
+<meta property="og:url" content="https://anycast.ai">
+<meta property="og:site_name" content="Anycast">
+<meta property="og:image" content="https://anycast.ai/og-image.png">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Anycast — AI-Powered Digital Headcount">
+<meta name="twitter:description" content="Deploy AI-powered team members in minutes. Not software you implement in months.">
+
+<!-- Structured Data: Organization -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Anycast",
+  "description": "AI-powered digital headcount platform. Deploy team members in minutes.",
+  "url": "https://anycast.ai",
+  "parentOrganization": {
+    "@type": "Organization",
+    "name": "ExCom AI L.L.C-FZ",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Meydan Grandstand, 6th Floor, Meydan Road",
+      "addressLocality": "Dubai",
+      "addressCountry": "AE"
+    }
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "info@excom.ai",
+    "contactType": "sales"
+  }
+}
+</script>
+
+<!-- Structured Data: SoftwareApplication -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Anycast",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "AI-powered digital headcount. Deploy team members for banking, healthcare, insurance, compliance, HR, and more.",
+  "offers": {
+    "@type": "Offer",
+    "category": "Enterprise"
+  },
+  "featureList": [
+    "AI-powered team members",
+    "Banking automation",
+    "Healthcare operations",
+    "Insurance claims processing",
+    "Compliance monitoring",
+    "GDPR compliant",
+    "AES-256 encryption"
+  ]
+}
+</script>
+
+<!-- Structured Data: FAQ (AEO) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Anycast?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anycast is an AI-powered platform that deploys digital team members for your business. Instead of hiring, you deploy AI headcount that handles compliance, customer support, loan processing, and more — ready day one, no IT setup required."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is Anycast different from other AI tools?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anycast is not a tool you learn — it's a service that works. Unlike SaaS platforms that require training and implementation, Anycast deploys as a team member that handles the work directly. No plugins, no dashboards, no change management."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What industries does Anycast serve?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anycast serves Banking, Healthcare, Insurance, Telecom, and Energy industries with specialized AI team members for compliance, operations, customer support, accounting, and sales."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Anycast secure and compliant?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Anycast is GDPR compliant, uses AES-256 encryption, maintains full audit trails, never trains AI on customer data, and deletes all data on contract termination. Built for regulated industries."
+      }
+    }
+  ]
+}
+</script>
+
 <style>
   :root {
     --bg: #0a0e17;
@@ -16,49 +128,58 @@
     --dark-gray: #3a4560;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
     background: var(--bg); color: var(--light); line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
   }
   a { color: var(--cyan); text-decoration: none; }
   a:hover { opacity: 0.85; }
 
+  /* PARTICLES CANVAS */
+  #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(10,14,23,0.92); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    background: rgba(10,14,23,0.7); backdrop-filter: blur(16px);
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s;
   }
+  nav.scrolled { background: rgba(10,14,23,0.95); border-bottom-color: var(--border); }
   .nav-inner {
     max-width: 1060px; margin: 0 auto;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 24px; height: 60px;
+    padding: 0 24px; height: 64px; transition: height 0.3s;
   }
+  nav.scrolled .nav-inner { height: 56px; }
   .nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-  .nav-logo .icon {
-    width: 28px; height: 28px; border-radius: 6px; overflow: hidden;
-  }
-  .nav-logo .icon img {
-    width: 100%; height: 100%; display: block;
-  }
+  .nav-logo .icon { width: 28px; height: 28px; border-radius: 6px; overflow: hidden; transition: transform 0.3s; }
+  .nav-logo:hover .icon { transform: scale(1.1); }
+  .nav-logo .icon img { width: 100%; height: 100%; display: block; }
   .nav-logo span { font-weight: 700; font-size: 17px; color: var(--white); }
   .nav-center { display: flex; gap: 28px; align-items: center; }
   .nav-center > a, .nav-center .dropdown > a {
     color: var(--gray); font-size: 13px; font-weight: 500;
     letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer;
-    transition: color 0.2s;
+    transition: color 0.2s; position: relative;
   }
   .nav-center > a:hover, .nav-center .dropdown > a:hover { color: var(--white); }
+  .nav-center > a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px;
+    background: var(--cyan); transition: width 0.3s;
+  }
+  .nav-center > a:hover::after { width: 100%; }
   .dropdown { position: relative; }
   .dropdown-menu {
-    display: none; position: absolute; top: 36px; left: 50%; transform: translateX(-50%);
+    opacity: 0; visibility: hidden; position: absolute; top: 36px; left: 50%; transform: translateX(-50%) translateY(8px);
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
     padding: 20px 0; min-width: 440px; z-index: 200;
     box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
   }
-  .dropdown:hover .dropdown-menu { display: flex; }
+  .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
   .dropdown-col { flex: 1; padding: 0 24px; }
   .dropdown-col:first-child { border-right: 1px solid var(--border); }
   .dropdown-col h4 {
@@ -67,31 +188,51 @@
   }
   .dropdown-col a {
     display: block; padding: 7px 0; font-size: 13px; color: var(--light);
-    text-transform: none; letter-spacing: 0; font-weight: 400; transition: color 0.2s;
+    text-transform: none; letter-spacing: 0; font-weight: 400; transition: all 0.2s;
+    padding-left: 0;
   }
-  .dropdown-col a:hover { color: var(--cyan); }
+  .dropdown-col a:hover { color: var(--cyan); padding-left: 6px; }
   .btn {
     display: inline-block; padding: 10px 24px; border-radius: 6px;
-    font-weight: 600; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s;
+    font-weight: 600; font-size: 13px; cursor: pointer; border: none; transition: all 0.3s;
+    position: relative; overflow: hidden;
   }
   .btn-primary { background: var(--cyan); color: var(--bg); }
-  .btn-primary:hover { background: #00a0c0; color: var(--bg); }
-  .nav-toggle { display: none; background: none; border: none; color: var(--white); font-size: 22px; cursor: pointer; }
+  .btn-primary:hover { background: #00a0c0; color: var(--bg); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,180,216,0.3); }
+  .btn-primary:active { transform: translateY(0); }
+  .nav-toggle { display: none; background: none; border: none; color: var(--white); font-size: 22px; cursor: pointer; padding: 8px; }
+
+  /* MOBILE NAV */
+  .mobile-menu {
+    display: none; position: fixed; top: 56px; left: 0; right: 0; bottom: 0;
+    background: rgba(10,14,23,0.98); z-index: 99; padding: 24px;
+    flex-direction: column; gap: 0; overflow-y: auto;
+    animation: slideDown 0.3s ease;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    display: block; padding: 14px 0; font-size: 16px; color: var(--light);
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-menu a:hover { color: var(--cyan); }
+  .mobile-menu .mobile-section { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--dark-gray); text-transform: uppercase; padding: 20px 0 8px; }
+  .mobile-menu .btn { margin-top: 20px; text-align: center; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
   @media (max-width: 768px) {
     .nav-center { display: none; }
     .nav-toggle { display: block; }
-    .dropdown-menu { min-width: 300px; left: auto; right: -80px; transform: none; }
   }
 
   /* LAYOUT */
-  .container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+  .container { max-width: 1060px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
 
   /* HERO */
   .hero {
     min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    padding-top: 60px; text-align: center;
+    padding-top: 64px; text-align: center; position: relative;
   }
-  .hero-content { max-width: 720px; }
+  .hero-content { max-width: 720px; position: relative; z-index: 1; }
   .hero .label {
     font-size: 13px; color: var(--gray); letter-spacing: 1.5px; margin-bottom: 20px;
     text-transform: uppercase; opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
@@ -111,20 +252,20 @@
     opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
     padding: 14px 32px; font-size: 15px;
   }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  .hero-glow {
+    position: absolute; width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,180,216,0.06) 0%, transparent 70%);
+    top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 0;
+    animation: glowPulse 4s ease-in-out infinite;
   }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+  @keyframes glowPulse { 0%,100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); } 50% { opacity: 1; transform: translate(-50%,-50%) scale(1.1); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
   /* STRIP */
   .strip {
     padding: 40px 0; text-align: center;
     border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    position: relative; z-index: 1;
   }
   .strip p { font-size: 18px; color: var(--gray); font-weight: 300; }
   .strip strong { color: var(--white); font-weight: 600; }
@@ -135,9 +276,7 @@
     font-size: 11px; font-weight: 700; letter-spacing: 3px;
     color: var(--cyan); text-transform: uppercase; margin-bottom: 10px;
   }
-  .section h2 {
-    font-size: clamp(22px, 3vw, 30px); font-weight: 800; color: var(--white); margin-bottom: 6px;
-  }
+  .section h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; color: var(--white); margin-bottom: 6px; }
   .section .lead { font-size: 14px; color: var(--gray); margin-bottom: 36px; }
 
   /* SOL GRID */
@@ -161,31 +300,26 @@
   .sol-desc { font-size: 12px; color: var(--gray); }
 
   /* TRUST */
-  .badges {
-    display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;
+  .badges { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px; }
+  .badge {
+    display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--white);
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 8px 16px;
+    transition: all 0.3s;
   }
-  .badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--white); }
-  .badge .dot {
-    width: 5px; height: 5px; background: var(--cyan); border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-  }
+  .badge:hover { border-color: var(--cyan); transform: translateY(-2px); }
+  .badge .dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; }
 
   /* CTA */
   .cta-section {
     padding: 80px 0; text-align: center; border-top: 1px solid var(--border);
+    position: relative; z-index: 1;
   }
-  .cta-section h2 {
-    font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: var(--white); margin-bottom: 6px;
-  }
+  .cta-section h2 { font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: var(--white); margin-bottom: 6px; }
   .cta-section .accent { color: var(--cyan); }
   .cta-section p { font-size: 16px; color: var(--gray); margin: 12px 0 28px; }
 
   /* FOOTER */
-  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; }
+  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; position: relative; z-index: 1; }
   .footer-inner {
     max-width: 1060px; margin: 0 auto; padding: 0 24px;
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
@@ -195,10 +329,9 @@
 
   /* SUB-PAGES */
   .page { display: none; }
-  .page.active { display: block; }
-  .sub-hero {
-    padding: 120px 0 40px; text-align: center;
-  }
+  .page.active { display: block; animation: pageFade 0.4s ease; }
+  @keyframes pageFade { from { opacity: 0; } to { opacity: 1; } }
+  .sub-hero { padding: 120px 0 40px; text-align: center; }
   .sub-hero h1 {
     font-size: clamp(26px, 4vw, 38px); font-weight: 800; color: var(--white); margin-bottom: 10px;
     opacity: 0; animation: fadeUp 0.6s 0.1s forwards;
@@ -210,19 +343,15 @@
   .back-link {
     display: inline-flex; align-items: center; gap: 6px;
     font-size: 13px; color: var(--cyan); cursor: pointer; margin-bottom: 24px;
-    transition: gap 0.2s;
-    opacity: 0; animation: fadeIn 0.4s 0.05s forwards;
+    transition: gap 0.2s; opacity: 0; animation: fadeUp 0.3s 0.05s forwards;
   }
   .back-link:hover { gap: 10px; }
   .sub-content { padding: 20px 0 80px; }
 
-  /* METRICS */
+  /* METRICS with counter animation */
   .metrics { display: flex; gap: 40px; justify-content: center; margin: 32px 0; flex-wrap: wrap; }
   .metric { text-align: center; }
-  .metric .num {
-    font-size: 36px; font-weight: 800; color: var(--cyan);
-    opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
-  }
+  .metric .num { font-size: 36px; font-weight: 800; color: var(--cyan); }
   .metric .txt { font-size: 11px; color: var(--gray); margin-top: 2px; }
 
   /* USE CASE CARDS */
@@ -233,10 +362,9 @@
   @media (max-width: 640px) { .uc-grid { grid-template-columns: 1fr; } }
   .uc-card {
     background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--cyan);
-    border-radius: 8px; padding: 20px;
-    transition: all 0.3s; cursor: default;
+    border-radius: 8px; padding: 20px; transition: all 0.3s; cursor: default;
   }
-  .uc-card:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,180,216,0.08); }
+  .uc-card:hover { border-color: var(--cyan); transform: translateY(-3px) scale(1.01); box-shadow: 0 12px 32px rgba(0,180,216,0.1); }
   .uc-card h4 { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
   .uc-card p { font-size: 12px; color: var(--gray); }
 
@@ -246,63 +374,91 @@
     align-items: center; margin: 32px auto; max-width: 740px; text-align: left;
   }
   @media (max-width: 640px) { .ba-row { grid-template-columns: 1fr; } }
-  .ba-col { padding: 20px; border-radius: 8px; }
+  .ba-col { padding: 20px; border-radius: 8px; transition: transform 0.3s; }
+  .ba-col:hover { transform: scale(1.02); }
   .ba-col.before { background: var(--card); border: 1px solid var(--border); }
   .ba-col.after { background: #0d1a2d; border: 1px solid var(--cyan); }
-  .ba-arrow { text-align: center; font-size: 24px; color: var(--cyan); padding: 0 16px; }
+  .ba-arrow { text-align: center; font-size: 24px; color: var(--cyan); padding: 0 16px; animation: arrowPulse 2s infinite; }
+  @keyframes arrowPulse { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
   @media (max-width: 640px) { .ba-arrow { transform: rotate(90deg); padding: 8px 0; } }
-  .ba-col h4 {
-    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
-  }
+  .ba-col h4 { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
   .ba-col.before h4 { color: var(--gray); }
   .ba-col.after h4 { color: var(--cyan); }
   .ba-col .ba-item { font-size: 13px; color: var(--light); margin-bottom: 6px; padding-left: 14px; position: relative; }
   .ba-col .ba-item::before {
-    content: ''; position: absolute; left: 0; top: 6px;
-    width: 5px; height: 5px; border-radius: 50%;
+    content: ''; position: absolute; left: 0; top: 6px; width: 5px; height: 5px; border-radius: 50%;
   }
   .ba-col.before .ba-item::before { background: var(--gray); }
   .ba-col.after .ba-item::before { background: var(--cyan); }
 
   /* SCROLL REVEAL */
-  .reveal {
-    opacity: 0; transform: translateY(24px);
-    transition: opacity 0.6s, transform 0.6s;
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s cubic-bezier(0.4,0,0.2,1), transform 0.7s cubic-bezier(0.4,0,0.2,1); }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* CURSOR GLOW */
+  .cursor-glow {
+    position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 0;
+    background: radial-gradient(circle, rgba(0,180,216,0.04) 0%, transparent 70%);
+    transform: translate(-50%, -50%); transition: left 0.3s ease, top 0.3s ease;
   }
-  .reveal.visible {
-    opacity: 1; transform: translateY(0);
+
+  /* MOBILE RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 28px; }
+    .hero .subtitle { font-size: 15px; }
+    .badges { gap: 10px; }
+    .badge { font-size: 11px; padding: 6px 12px; }
+    .metrics { gap: 24px; }
+    .metric .num { font-size: 28px; }
+    .uc-grid { grid-template-columns: 1fr; }
+    .ba-row { grid-template-columns: 1fr; }
+    .ba-arrow { transform: rotate(90deg); padding: 8px 0; }
+    .sol-grid { grid-template-columns: 1fr; gap: 24px; }
+    .sub-hero { padding: 100px 0 30px; }
+    .section { padding: 60px 0; }
+    .cta-section { padding: 60px 0; }
+    .cursor-glow { display: none; }
   }
 </style>
 </head>
 <body>
 
+<!-- Cursor glow -->
+<div class="cursor-glow" id="cursorGlow"></div>
+
+<!-- Particle background -->
+<canvas id="particles"></canvas>
+
 <!-- NAV -->
-<nav>
+<nav id="mainNav">
   <div class="nav-inner">
-    <div class="nav-logo" onclick="showPage('home')">
-      <div class="icon"><img src="data:image/png;base64,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" alt="Anycast"></div>
+    <div class="nav-logo" onclick="showPage('home')" role="link" aria-label="Anycast Home" tabindex="0">
+      <div class="icon"><img src="data:image/png;base64,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" alt="Anycast Logo"></div>
       <span>anycast</span>
     </div>
     <div class="nav-center" id="navCenter">
       <a href="#" onclick="scrollTo_('trust')">Trust</a>
       <div class="dropdown">
-        <a href="#">Solutions &#9662;</a>
-        <div class="dropdown-menu">
+        <a href="#" aria-haspopup="true">Solutions &#9662;</a>
+        <div class="dropdown-menu" role="menu">
           <div class="dropdown-col">
             <h4>By Industry</h4>
-            <a href="#" onclick="showPage('banking')">Banking</a>
-            <a href="#" onclick="showPage('healthcare')">Healthcare</a>
-            <a href="#" onclick="showPage('insurance')">Insurance</a>
-            <a href="#" onclick="showPage('telecom')">Telecom</a>
-            <a href="#" onclick="showPage('energy')">Energy</a>
+            <a href="#" onclick="showPage('banking')" role="menuitem">Banking</a>
+            <a href="#" onclick="showPage('healthcare')" role="menuitem">Healthcare</a>
+            <a href="#" onclick="showPage('insurance')" role="menuitem">Insurance</a>
+            <a href="#" onclick="showPage('telecom')" role="menuitem">Telecom</a>
+            <a href="#" onclick="showPage('energy')" role="menuitem">Energy</a>
           </div>
           <div class="dropdown-col">
             <h4>By Solution</h4>
-            <a href="#" onclick="showPage('support')">Support &amp; Helpdesk</a>
-            <a href="#" onclick="showPage('hr')">Operations &amp; HR</a>
-            <a href="#" onclick="showPage('compliance')">Compliance &amp; Regulatory</a>
-            <a href="#" onclick="showPage('finance')">Accounting &amp; Tax</a>
-            <a href="#" onclick="showPage('sales')">Sales &amp; Marketing</a>
+            <a href="#" onclick="showPage('support')" role="menuitem">Support &amp; Helpdesk</a>
+            <a href="#" onclick="showPage('hr')" role="menuitem">Operations &amp; HR</a>
+            <a href="#" onclick="showPage('compliance')" role="menuitem">Compliance &amp; Regulatory</a>
+            <a href="#" onclick="showPage('finance')" role="menuitem">Accounting &amp; Tax</a>
+            <a href="#" onclick="showPage('sales')" role="menuitem">Sales &amp; Marketing</a>
           </div>
         </div>
       </div>
@@ -310,17 +466,37 @@
     </div>
     <div style="display:flex;gap:10px;align-items:center;">
       <a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a>
-      <button class="nav-toggle" onclick="toggleMobileMenu()">&#9776;</button>
+      <button class="nav-toggle" onclick="toggleMobileMenu()" aria-label="Toggle menu">&#9776;</button>
     </div>
   </div>
 </nav>
 
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="scrollTo_('trust');closeMobile()">Trust</a>
+  <div class="mobile-section">Industries</div>
+  <a href="#" onclick="showPage('banking');closeMobile()">Banking</a>
+  <a href="#" onclick="showPage('healthcare');closeMobile()">Healthcare</a>
+  <a href="#" onclick="showPage('insurance');closeMobile()">Insurance</a>
+  <a href="#" onclick="showPage('telecom');closeMobile()">Telecom</a>
+  <a href="#" onclick="showPage('energy');closeMobile()">Energy</a>
+  <div class="mobile-section">Solutions</div>
+  <a href="#" onclick="showPage('support');closeMobile()">Support &amp; Helpdesk</a>
+  <a href="#" onclick="showPage('hr');closeMobile()">Operations &amp; HR</a>
+  <a href="#" onclick="showPage('compliance');closeMobile()">Compliance &amp; Regulatory</a>
+  <a href="#" onclick="showPage('finance');closeMobile()">Accounting &amp; Tax</a>
+  <a href="#" onclick="showPage('sales');closeMobile()">Sales &amp; Marketing</a>
+  <a href="#" onclick="scrollTo_('insights');closeMobile()">Insights</a>
+  <a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a>
+</div>
+
 <!-- ==================== HOME ==================== -->
 <div class="page active" id="page-home">
   <div class="container">
-    <section class="hero">
+    <section class="hero" role="banner">
+      <div class="hero-glow"></div>
       <div class="hero-content">
-        <div class="label">The service layer for enterprise AI</div>
+        <div class="label" aria-label="Tagline">The service layer for enterprise AI</div>
         <h1>Run like a 20-person operation.<br><span class="accent">Stay a 5-person company.</span></h1>
         <p class="subtitle">Headcount you deploy in minutes.<br>Not software you implement in months.</p>
         <a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a>
@@ -335,33 +511,33 @@
   </div>
 
   <div class="container">
-    <section class="section reveal" id="solutions">
+    <section class="section reveal" id="solutions" aria-label="Solutions">
       <div class="section-label">Solutions</div>
       <h2>Find your industry. Deploy your team.</h2>
       <p class="lead">Every role is a team member, not a feature.</p>
       <div class="sol-grid">
         <div class="sol-col">
           <h3>By Industry</h3>
-          <div class="sol-item" onclick="showPage('banking')"><div class="sol-title">Banking</div><div class="sol-desc">Boost lending and service efficiency</div></div>
-          <div class="sol-item" onclick="showPage('healthcare')"><div class="sol-title">Healthcare</div><div class="sol-desc">Improve care delivery and patient flow</div></div>
-          <div class="sol-item" onclick="showPage('insurance')"><div class="sol-title">Insurance</div><div class="sol-desc">Optimize claims and policy processes</div></div>
-          <div class="sol-item" onclick="showPage('telecom')"><div class="sol-title">Telecom</div><div class="sol-desc">Enhance network and service operations</div></div>
-          <div class="sol-item" onclick="showPage('energy')"><div class="sol-title">Energy</div><div class="sol-desc">Optimize field and safety operations</div></div>
+          <div class="sol-item" onclick="showPage('banking')" role="link" tabindex="0"><div class="sol-title">Banking</div><div class="sol-desc">Boost lending and service efficiency</div></div>
+          <div class="sol-item" onclick="showPage('healthcare')" role="link" tabindex="0"><div class="sol-title">Healthcare</div><div class="sol-desc">Improve care delivery and patient flow</div></div>
+          <div class="sol-item" onclick="showPage('insurance')" role="link" tabindex="0"><div class="sol-title">Insurance</div><div class="sol-desc">Optimize claims and policy processes</div></div>
+          <div class="sol-item" onclick="showPage('telecom')" role="link" tabindex="0"><div class="sol-title">Telecom</div><div class="sol-desc">Enhance network and service operations</div></div>
+          <div class="sol-item" onclick="showPage('energy')" role="link" tabindex="0"><div class="sol-title">Energy</div><div class="sol-desc">Optimize field and safety operations</div></div>
         </div>
         <div class="sol-col">
           <h3>By Solution</h3>
-          <div class="sol-item" onclick="showPage('support')"><div class="sol-title">Support &amp; Helpdesk</div><div class="sol-desc">Improve service speed and quality</div></div>
-          <div class="sol-item" onclick="showPage('hr')"><div class="sol-title">Operations &amp; HR</div><div class="sol-desc">Automate workforce processes</div></div>
-          <div class="sol-item" onclick="showPage('compliance')"><div class="sol-title">Compliance &amp; Regulatory</div><div class="sol-desc">Reduce risk with automated controls</div></div>
-          <div class="sol-item" onclick="showPage('finance')"><div class="sol-title">Accounting &amp; Tax</div><div class="sol-desc">Accelerate reporting and accuracy</div></div>
-          <div class="sol-item" onclick="showPage('sales')"><div class="sol-title">Sales &amp; Marketing</div><div class="sol-desc">Multiply campaign effectiveness and ROI</div></div>
+          <div class="sol-item" onclick="showPage('support')" role="link" tabindex="0"><div class="sol-title">Support &amp; Helpdesk</div><div class="sol-desc">Improve service speed and quality</div></div>
+          <div class="sol-item" onclick="showPage('hr')" role="link" tabindex="0"><div class="sol-title">Operations &amp; HR</div><div class="sol-desc">Automate workforce processes</div></div>
+          <div class="sol-item" onclick="showPage('compliance')" role="link" tabindex="0"><div class="sol-title">Compliance &amp; Regulatory</div><div class="sol-desc">Reduce risk with automated controls</div></div>
+          <div class="sol-item" onclick="showPage('finance')" role="link" tabindex="0"><div class="sol-title">Accounting &amp; Tax</div><div class="sol-desc">Accelerate reporting and accuracy</div></div>
+          <div class="sol-item" onclick="showPage('sales')" role="link" tabindex="0"><div class="sol-title">Sales &amp; Marketing</div><div class="sol-desc">Multiply campaign effectiveness and ROI</div></div>
         </div>
       </div>
     </section>
   </div>
 
   <div class="container">
-    <section class="section reveal" id="trust">
+    <section class="section reveal" id="trust" aria-label="Trust and Security">
       <div class="section-label">Trust</div>
       <h2>Built for regulated industries.</h2>
       <div class="badges">
@@ -375,7 +551,7 @@
   </div>
 
   <div class="container">
-    <section class="section reveal" id="insights">
+    <section class="section reveal" id="insights" aria-label="Insights">
       <div class="section-label">Insights</div>
       <h2>The service, not the tool.</h2>
       <p class="lead" style="max-width:560px;margin-left:auto;margin-right:auto;">Every industry has the same problem: too much process, not enough people. The companies that win aren't the ones with the best software — they're the ones with the most capacity.</p>
@@ -383,7 +559,7 @@
   </div>
 
   <div class="container">
-    <section class="cta-section reveal">
+    <section class="cta-section reveal" aria-label="Call to action">
       <h2>You don't need a bigger team.<br><span class="accent">You need bigger capacity.</span></h2>
       <p>Deploy your first workspace.</p>
       <a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary" style="padding:14px 36px;font-size:15px;">Book a Demo</a>
@@ -392,300 +568,238 @@
 </div>
 
 <!-- ==================== BANKING ==================== -->
-<div class="page" id="page-banking">
-  <div class="container">
-    <section class="sub-hero">
-      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
-      <div class="section-label">Banking</div>
-      <h1>Boost lending and service efficiency.</h1>
-      <p>Deploy capacity across customer service, compliance, and financial processing — without growing your team.</p>
-    </section>
-    <section class="sub-content">
-      <div class="metrics">
-        <div class="metric"><div class="num">80%</div><div class="txt">faster KYC processing</div></div>
-        <div class="metric"><div class="num">10x</div><div class="txt">loan volume capacity</div></div>
-        <div class="metric"><div class="num">100%</div><div class="txt">audit-ready compliance</div></div>
-      </div>
-      <div class="uc-grid">
-        <div class="uc-card"><h4>KYC &amp; AML Analyst</h4><p>Identity verification, sanctions screening, adverse media checks, and risk scoring. Compliant across jurisdictions.</p></div>
-        <div class="uc-card"><h4>Loan Processing Assistant</h4><p>Application intake, document extraction, eligibility pre-checks, and status tracking. Every application complete.</p></div>
-        <div class="uc-card"><h4>Collections Agent</h4><p>Payment reminders via WhatsApp with 98% open rate. Structured escalation. Human intervention only when needed.</p></div>
-        <div class="uc-card"><h4>Compliance Officer</h4><p>Regulatory monitoring, policy checks, audit trails. Certified, audit-ready processes across banking standards.</p></div>
-      </div>
-      <div class="ba-row">
-        <div class="ba-col before"><h4>Before</h4><div class="ba-item">KYC takes hours per customer</div><div class="ba-item">70% of loan applications abandoned</div><div class="ba-item">Collections by phone — expensive, ignored</div><div class="ba-item">Compliance tracked manually</div></div>
-        <div class="ba-arrow">&rarr;</div>
-        <div class="ba-col after"><h4>With Anycast</h4><div class="ba-item">KYC completed in minutes</div><div class="ba-item">Conversational applications, 3x completion</div><div class="ba-item">WhatsApp reminders, one-tap payment</div><div class="ba-item">Real-time compliance monitoring</div></div>
-      </div>
-      <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
-    </section>
-  </div>
-</div>
+<div class="page" id="page-banking"><div class="container">
+  <section class="sub-hero"><div class="back-link" onclick="showPage('home')">&larr; Solutions</div><div class="section-label">Banking</div><h1>Boost lending and service efficiency.</h1><p>Deploy capacity across customer service, compliance, and financial processing — without growing your team.</p></section>
+  <section class="sub-content">
+    <div class="metrics"><div class="metric"><div class="num" data-count="80">0</div><div class="txt">% faster KYC processing</div></div><div class="metric"><div class="num" data-count="10">0</div><div class="txt">x loan volume capacity</div></div><div class="metric"><div class="num" data-count="100">0</div><div class="txt">% audit-ready compliance</div></div></div>
+    <div class="uc-grid">
+      <div class="uc-card"><h4>KYC &amp; AML Analyst</h4><p>Identity verification, sanctions screening, adverse media checks, and risk scoring. Compliant across jurisdictions.</p></div>
+      <div class="uc-card"><h4>Loan Processing Assistant</h4><p>Application intake, document extraction, eligibility pre-checks, and status tracking. Every application complete.</p></div>
+      <div class="uc-card"><h4>Collections Agent</h4><p>Payment reminders via WhatsApp with 98% open rate. Structured escalation. Human intervention only when needed.</p></div>
+      <div class="uc-card"><h4>Compliance Officer</h4><p>Regulatory monitoring, policy checks, audit trails. Certified, audit-ready processes across banking standards.</p></div>
+    </div>
+    <div class="ba-row"><div class="ba-col before"><h4>Before</h4><div class="ba-item">KYC takes hours per customer</div><div class="ba-item">70% of loan applications abandoned</div><div class="ba-item">Collections by phone — expensive, ignored</div><div class="ba-item">Compliance tracked manually</div></div><div class="ba-arrow">&rarr;</div><div class="ba-col after"><h4>With Anycast</h4><div class="ba-item">KYC completed in minutes</div><div class="ba-item">Conversational applications, 3x completion</div><div class="ba-item">WhatsApp reminders, one-tap payment</div><div class="ba-item">Real-time compliance monitoring</div></div></div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
+  </section>
+</div></div>
 
 <!-- ==================== HEALTHCARE ==================== -->
-<div class="page" id="page-healthcare">
-  <div class="container">
-    <section class="sub-hero">
-      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
-      <div class="section-label">Healthcare</div>
-      <h1>Improve care delivery and patient flow.</h1>
-      <p>Deploy capacity for claims, documentation, and patient coordination — so your clinical team focuses on care.</p>
-    </section>
-    <section class="sub-content">
-      <div class="metrics">
-        <div class="metric"><div class="num">6x</div><div class="txt">faster medical coding</div></div>
-        <div class="metric"><div class="num">80%</div><div class="txt">less manual processing</div></div>
-        <div class="metric"><div class="num">24/7</div><div class="txt">patient coordination</div></div>
-      </div>
-      <div class="uc-grid">
-        <div class="uc-card"><h4>Claims Processing Assistant</h4><p>End-to-end claims handling — intake, validation, policy matching, and approval routing. Days reduced to hours.</p></div>
-        <div class="uc-card"><h4>Medical Coding Specialist</h4><p>Outpatient E/M coding, documentation review, and compliance checks. Accurate, consistent, auditable.</p></div>
-        <div class="uc-card"><h4>Patient Coordinator</h4><p>Appointment scheduling, follow-ups, referral tracking, and care plan reminders. No patient falls through the cracks.</p></div>
-        <div class="uc-card"><h4>Prior Authorization Agent</h4><p>Authorization requests, status tracking, documentation gathering. Reduce denials and delays.</p></div>
-      </div>
-      <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
-    </section>
-  </div>
-</div>
+<div class="page" id="page-healthcare"><div class="container">
+  <section class="sub-hero"><div class="back-link" onclick="showPage('home')">&larr; Solutions</div><div class="section-label">Healthcare</div><h1>Improve care delivery and patient flow.</h1><p>Deploy capacity for claims, documentation, and patient coordination — so your clinical team focuses on care.</p></section>
+  <section class="sub-content">
+    <div class="metrics"><div class="metric"><div class="num" data-count="6">0</div><div class="txt">x faster medical coding</div></div><div class="metric"><div class="num" data-count="80">0</div><div class="txt">% less manual processing</div></div><div class="metric"><div class="num">24/7</div><div class="txt">patient coordination</div></div></div>
+    <div class="uc-grid">
+      <div class="uc-card"><h4>Claims Processing Assistant</h4><p>End-to-end claims handling — intake, validation, policy matching, and approval routing. Days reduced to hours.</p></div>
+      <div class="uc-card"><h4>Medical Coding Specialist</h4><p>Outpatient E/M coding, documentation review, and compliance checks. Accurate, consistent, auditable.</p></div>
+      <div class="uc-card"><h4>Patient Coordinator</h4><p>Appointment scheduling, follow-ups, referral tracking, and care plan reminders. No patient falls through the cracks.</p></div>
+      <div class="uc-card"><h4>Prior Authorization Agent</h4><p>Authorization requests, status tracking, documentation gathering. Reduce denials and delays.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
+  </section>
+</div></div>
 
 <!-- ==================== INSURANCE ==================== -->
-<div class="page" id="page-insurance">
-  <div class="container">
-    <section class="sub-hero">
-      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
-      <div class="section-label">Insurance</div>
-      <h1>Optimize claims and policy processes.</h1>
-      <p>Deploy capacity for claims adjudication, underwriting support, and fraud detection — with full audit trails.</p>
-    </section>
-    <section class="sub-content">
-      <div class="metrics">
-        <div class="metric"><div class="num">10x</div><div class="txt">faster claims processing</div></div>
-        <div class="metric"><div class="num">100%</div><div class="txt">audit-ready accuracy</div></div>
-        <div class="metric"><div class="num">80%</div><div class="txt">cost reduction</div></div>
-      </div>
-      <div class="uc-grid">
-        <div class="uc-card"><h4>Claims Adjudicator</h4><p>Evidence review, policy matching, approval routing. End-to-end, cutting turnaround from days to hours.</p></div>
-        <div class="uc-card"><h4>Underwriting Assistant</h4><p>Risk assessment, document analysis, policy structuring. Consistent evaluation every time.</p></div>
-        <div class="uc-card"><h4>Fraud Detection Analyst</h4><p>Pattern recognition, anomaly flagging, cross-reference checks. Catches what humans miss at volume.</p></div>
-        <div class="uc-card"><h4>Policy Admin Assistant</h4><p>Policy updates, renewals, endorsements, customer communications. Accelerated administration.</p></div>
-      </div>
-      <div class="ba-row">
-        <div class="ba-col before"><h4>Before</h4><div class="ba-item">Claims Q&A cycles take 10 minutes</div><div class="ba-item">Manual review creates delays and errors</div><div class="ba-item">Fraud detected too late</div></div>
-        <div class="ba-arrow">&rarr;</div>
-        <div class="ba-col after"><h4>With Anycast</h4><div class="ba-item">Claims Q&A reduced to 1 minute</div><div class="ba-item">AI review with human oversight</div><div class="ba-item">Real-time fraud flagging at scale</div></div>
-      </div>
-      <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
-    </section>
-  </div>
-</div>
+<div class="page" id="page-insurance"><div class="container">
+  <section class="sub-hero"><div class="back-link" onclick="showPage('home')">&larr; Solutions</div><div class="section-label">Insurance</div><h1>Optimize claims and policy processes.</h1><p>Deploy capacity for claims adjudication, underwriting support, and fraud detection — with full audit trails.</p></section>
+  <section class="sub-content">
+    <div class="metrics"><div class="metric"><div class="num" data-count="10">0</div><div class="txt">x faster claims processing</div></div><div class="metric"><div class="num" data-count="100">0</div><div class="txt">% audit-ready accuracy</div></div><div class="metric"><div class="num" data-count="80">0</div><div class="txt">% cost reduction</div></div></div>
+    <div class="uc-grid">
+      <div class="uc-card"><h4>Claims Adjudicator</h4><p>Evidence review, policy matching, approval routing. End-to-end, cutting turnaround from days to hours.</p></div>
+      <div class="uc-card"><h4>Underwriting Assistant</h4><p>Risk assessment, document analysis, policy structuring. Consistent evaluation every time.</p></div>
+      <div class="uc-card"><h4>Fraud Detection Analyst</h4><p>Pattern recognition, anomaly flagging, cross-reference checks. Catches what humans miss at volume.</p></div>
+      <div class="uc-card"><h4>Policy Admin Assistant</h4><p>Policy updates, renewals, endorsements, customer communications. Accelerated administration.</p></div>
+    </div>
+    <div class="ba-row"><div class="ba-col before"><h4>Before</h4><div class="ba-item">Claims Q&A cycles take 10 minutes</div><div class="ba-item">Manual review creates delays and errors</div><div class="ba-item">Fraud detected too late</div></div><div class="ba-arrow">&rarr;</div><div class="ba-col after"><h4>With Anycast</h4><div class="ba-item">Claims Q&A reduced to 1 minute</div><div class="ba-item">AI review with human oversight</div><div class="ba-item">Real-time fraud flagging at scale</div></div></div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
+  </section>
+</div></div>
 
 <!-- ==================== TELECOM ==================== -->
-<div class="page" id="page-telecom">
-  <div class="container">
-    <section class="sub-hero">
-      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
-      <div class="section-label">Telecom</div>
-      <h1>Enhance network and service operations.</h1>
-      <p>Deploy capacity for customer onboarding, KYC validation, and service operations — at telecom scale.</p>
-    </section>
-    <section class="sub-content">
-      <div class="metrics">
-        <div class="metric"><div class="num">80%</div><div class="txt">faster activation</div></div>
-        <div class="metric"><div class="num">10x</div><div class="txt">onboarding capacity</div></div>
-        <div class="metric"><div class="num">100%</div><div class="txt">regulatory compliance</div></div>
-      </div>
-      <div class="uc-grid">
-        <div class="uc-card"><h4>Customer Onboarding Agent</h4><p>End-to-end KYC validation, cutting activation times from hours to minutes while maintaining compliance.</p></div>
-        <div class="uc-card"><h4>Service Operations Assistant</h4><p>Ticket routing, troubleshooting, escalation management. First-line resolution without the queue.</p></div>
-        <div class="uc-card"><h4>Network Compliance Monitor</h4><p>Regulatory tracking, audit-ready processes, documentation management across telecom standards.</p></div>
-        <div class="uc-card"><h4>Billing &amp; Provisioning Agent</h4><p>Account setup, plan changes, billing inquiries, payment processing. Consistent, accurate, 24/7.</p></div>
-      </div>
-      <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
-    </section>
-  </div>
-</div>
+<div class="page" id="page-telecom"><div class="container">
+  <section class="sub-hero"><div class="back-link" onclick="showPage('home')">&larr; Solutions</div><div class="section-label">Telecom</div><h1>Enhance network and service operations.</h1><p>Deploy capacity for customer onboarding, KYC validation, and service operations — at telecom scale.</p></section>
+  <section class="sub-content">
+    <div class="metrics"><div class="metric"><div class="num" data-count="80">0</div><div class="txt">% faster activation</div></div><div class="metric"><div class="num" data-count="10">0</div><div class="txt">x onboarding capacity</div></div><div class="metric"><div class="num" data-count="100">0</div><div class="txt">% regulatory compliance</div></div></div>
+    <div class="uc-grid">
+      <div class="uc-card"><h4>Customer Onboarding Agent</h4><p>End-to-end KYC validation, cutting activation times from hours to minutes while maintaining compliance.</p></div>
+      <div class="uc-card"><h4>Service Operations Assistant</h4><p>Ticket routing, troubleshooting, escalation management. First-line resolution without the queue.</p></div>
+      <div class="uc-card"><h4>Network Compliance Monitor</h4><p>Regulatory tracking, audit-ready processes, documentation management across telecom standards.</p></div>
+      <div class="uc-card"><h4>Billing &amp; Provisioning Agent</h4><p>Account setup, plan changes, billing inquiries, payment processing. Consistent, accurate, 24/7.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
+  </section>
+</div></div>
 
 <!-- ==================== ENERGY ==================== -->
-<div class="page" id="page-energy">
-  <div class="container">
-    <section class="sub-hero">
-      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
-      <div class="section-label">Energy</div>
-      <h1>Optimize field and safety operations.</h1>
-      <p>Deploy capacity for document-heavy, compliance-driven energy operations — safer, smarter, faster.</p>
-    </section>
-    <section class="sub-content">
-      <div class="metrics">
-        <div class="metric"><div class="num">24x</div><div class="txt">faster procurement</div></div>
-        <div class="metric"><div class="num">100%</div><div class="txt">compliance-first</div></div>
-        <div class="metric"><div class="num">80%</div><div class="txt">less manual work</div></div>
-      </div>
-      <div class="uc-grid">
-        <div class="uc-card"><h4>Procurement Assistant</h4><p>Vendor evaluation, document processing, compliance checks. Procurement cycles from 4 hours to 10 minutes.</p></div>
-        <div class="uc-card"><h4>Safety &amp; Compliance Monitor</h4><p>Real-time risk insights, safety requirement tracking, regulatory documentation. Compliance-first.</p></div>
-        <div class="uc-card"><h4>Field Operations Coordinator</h4><p>Work order management, scheduling, progress tracking, and reporting across field teams.</p></div>
-        <div class="uc-card"><h4>Document Processing Specialist</h4><p>Bills of lading, manifests, customs forms, delivery receipts. Extraction, validation, routing.</p></div>
-      </div>
-      <div class="ba-row">
-        <div class="ba-col before"><h4>Before</h4><div class="ba-item">Procurement takes 4 hours</div><div class="ba-item">Manual document processing</div><div class="ba-item">Compliance in spreadsheets</div></div>
-        <div class="ba-arrow">&rarr;</div>
-        <div class="ba-col after"><h4>With Anycast</h4><div class="ba-item">Procurement in 10 minutes</div><div class="ba-item">Automated extraction and validation</div><div class="ba-item">Real-time compliance monitoring</div></div>
-      </div>
-      <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
-    </section>
-  </div>
-</div>
+<div class="page" id="page-energy"><div class="container">
+  <section class="sub-hero"><div class="back-link" onclick="showPage('home')">&larr; Solutions</div><div class="section-label">Energy</div><h1>Optimize field and safety operations.</h1><p>Deploy capacity for document-heavy, compliance-driven energy operations — safer, smarter, faster.</p></section>
+  <section class="sub-content">
+    <div class="metrics"><div class="metric"><div class="num" data-count="24">0</div><div class="txt">x faster procurement</div></div><div class="metric"><div class="num" data-count="100">0</div><div class="txt">% compliance-first</div></div><div class="metric"><div class="num" data-count="80">0</div><div class="txt">% less manual work</div></div></div>
+    <div class="uc-grid">
+      <div class="uc-card"><h4>Procurement Assistant</h4><p>Vendor evaluation, document processing, compliance checks. Procurement cycles from 4 hours to 10 minutes.</p></div>
+      <div class="uc-card"><h4>Safety &amp; Compliance Monitor</h4><p>Real-time risk insights, safety requirement tracking, regulatory documentation. Compliance-first.</p></div>
+      <div class="uc-card"><h4>Field Operations Coordinator</h4><p>Work order management, scheduling, progress tracking, and reporting across field teams.</p></div>
+      <div class="uc-card"><h4>Document Processing Specialist</h4><p>Bills of lading, manifests, customs forms, delivery receipts. Extraction, validation, routing.</p></div>
+    </div>
+    <div class="ba-row"><div class="ba-col before"><h4>Before</h4><div class="ba-item">Procurement takes 4 hours</div><div class="ba-item">Manual document processing</div><div class="ba-item">Compliance in spreadsheets</div></div><div class="ba-arrow">&rarr;</div><div class="ba-col after"><h4>With Anycast</h4><div class="ba-item">Procurement in 10 minutes</div><div class="ba-item">Automated extraction and validation</div><div class="ba-item">Real-time compliance monitoring</div></div></div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
+  </section>
+</div></div>
 
-<!-- ==================== SUPPORT & HELPDESK ==================== -->
-<div class="page" id="page-support">
-  <div class="container">
-    <section class="sub-hero">
-      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
-      <div class="section-label">Support &amp; Helpdesk</div>
-      <h1>Improve service speed and quality.</h1>
-      <p>Deploy capacity to handle customer inquiries, ticket routing, and resolution — 24/7, every channel.</p>
-    </section>
-    <section class="sub-content">
-      <div class="metrics">
-        <div class="metric"><div class="num">24/7</div><div class="txt">availability</div></div>
-        <div class="metric"><div class="num">80%</div><div class="txt">first-contact resolution</div></div>
-        <div class="metric"><div class="num">10x</div><div class="txt">ticket capacity</div></div>
-      </div>
-      <div class="uc-grid">
-        <div class="uc-card"><h4>Customer Support Agent</h4><p>Multi-channel support — chat, email, WhatsApp. Instant responses, intelligent routing, no queue.</p></div>
-        <div class="uc-card"><h4>Ticket Triage Specialist</h4><p>Classification, priority scoring, routing to the right team. Every ticket handled, none lost.</p></div>
-        <div class="uc-card"><h4>Knowledge Base Assistant</h4><p>Answers from your documentation, policies, and FAQs. Consistent, accurate, always current.</p></div>
-        <div class="uc-card"><h4>Escalation Manager</h4><p>Identifies high-priority issues, routes to humans, provides full context. Seamless handoff.</p></div>
-      </div>
-      <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
-    </section>
-  </div>
-</div>
+<!-- ==================== SUPPORT ==================== -->
+<div class="page" id="page-support"><div class="container">
+  <section class="sub-hero"><div class="back-link" onclick="showPage('home')">&larr; Solutions</div><div class="section-label">Support &amp; Helpdesk</div><h1>Improve service speed and quality.</h1><p>Deploy capacity to handle customer inquiries, ticket routing, and resolution — 24/7, every channel.</p></section>
+  <section class="sub-content">
+    <div class="metrics"><div class="metric"><div class="num">24/7</div><div class="txt">availability</div></div><div class="metric"><div class="num" data-count="80">0</div><div class="txt">% first-contact resolution</div></div><div class="metric"><div class="num" data-count="10">0</div><div class="txt">x ticket capacity</div></div></div>
+    <div class="uc-grid">
+      <div class="uc-card"><h4>Customer Support Agent</h4><p>Multi-channel support — chat, email, WhatsApp. Instant responses, intelligent routing, no queue.</p></div>
+      <div class="uc-card"><h4>Ticket Triage Specialist</h4><p>Classification, priority scoring, routing to the right team. Every ticket handled, none lost.</p></div>
+      <div class="uc-card"><h4>Knowledge Base Assistant</h4><p>Answers from your documentation, policies, and FAQs. Consistent, accurate, always current.</p></div>
+      <div class="uc-card"><h4>Escalation Manager</h4><p>Identifies high-priority issues, routes to humans, provides full context. Seamless handoff.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
+  </section>
+</div></div>
 
-<!-- ==================== OPERATIONS & HR ==================== -->
-<div class="page" id="page-hr">
-  <div class="container">
-    <section class="sub-hero">
-      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
-      <div class="section-label">Operations &amp; HR</div>
-      <h1>Automate workforce processes.</h1>
-      <p>Deploy capacity for onboarding, policy management, and HR administration — structured, compliant, consistent.</p>
-    </section>
-    <section class="sub-content">
-      <div class="metrics">
-        <div class="metric"><div class="num">80%</div><div class="txt">less admin workload</div></div>
-        <div class="metric"><div class="num">5 min</div><div class="txt">onboarding setup</div></div>
-        <div class="metric"><div class="num">100%</div><div class="txt">policy compliance</div></div>
-      </div>
-      <div class="uc-grid">
-        <div class="uc-card"><h4>Employee Onboarding Coordinator</h4><p>Document collection, system provisioning, policy acknowledgments, welcome workflows. Smooth from day one.</p></div>
-        <div class="uc-card"><h4>HR Admin Assistant</h4><p>Leave requests, policy questions, benefits inquiries, employee data updates. Handled consistently.</p></div>
-        <div class="uc-card"><h4>Expense Management Agent</h4><p>Submission, extraction, policy validation, approval, reimbursement, audit-ready reporting. Full lifecycle.</p></div>
-        <div class="uc-card"><h4>Recruiting Coordinator</h4><p>Resume screening, candidate communication, interview scheduling, pipeline tracking.</p></div>
-      </div>
-      <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
-    </section>
-  </div>
-</div>
+<!-- ==================== HR ==================== -->
+<div class="page" id="page-hr"><div class="container">
+  <section class="sub-hero"><div class="back-link" onclick="showPage('home')">&larr; Solutions</div><div class="section-label">Operations &amp; HR</div><h1>Automate workforce processes.</h1><p>Deploy capacity for onboarding, policy management, and HR administration — structured, compliant, consistent.</p></section>
+  <section class="sub-content">
+    <div class="metrics"><div class="metric"><div class="num" data-count="80">0</div><div class="txt">% less admin workload</div></div><div class="metric"><div class="num">5 min</div><div class="txt">onboarding setup</div></div><div class="metric"><div class="num" data-count="100">0</div><div class="txt">% policy compliance</div></div></div>
+    <div class="uc-grid">
+      <div class="uc-card"><h4>Employee Onboarding Coordinator</h4><p>Document collection, system provisioning, policy acknowledgments, welcome workflows. Smooth from day one.</p></div>
+      <div class="uc-card"><h4>HR Admin Assistant</h4><p>Leave requests, policy questions, benefits inquiries, employee data updates. Handled consistently.</p></div>
+      <div class="uc-card"><h4>Expense Management Agent</h4><p>Submission, extraction, policy validation, approval, reimbursement, audit-ready reporting. Full lifecycle.</p></div>
+      <div class="uc-card"><h4>Recruiting Coordinator</h4><p>Resume screening, candidate communication, interview scheduling, pipeline tracking.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
+  </section>
+</div></div>
 
-<!-- ==================== COMPLIANCE & REGULATORY ==================== -->
-<div class="page" id="page-compliance">
-  <div class="container">
-    <section class="sub-hero">
-      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
-      <div class="section-label">Compliance &amp; Regulatory</div>
-      <h1>Reduce risk with automated controls.</h1>
-      <p>Deploy capacity for regulatory monitoring, policy checks, and audit-ready documentation — every rule, every time.</p>
-    </section>
-    <section class="sub-content">
-      <div class="metrics">
-        <div class="metric"><div class="num">100%</div><div class="txt">audit-ready</div></div>
-        <div class="metric"><div class="num">24/7</div><div class="txt">regulatory monitoring</div></div>
-        <div class="metric"><div class="num">80%</div><div class="txt">less manual compliance</div></div>
-      </div>
-      <div class="uc-grid">
-        <div class="uc-card"><h4>Compliance Monitor</h4><p>Track regulatory changes, flag impacts, alert on deadlines. Full audit trails and immutable logs.</p></div>
-        <div class="uc-card"><h4>KYC / AML Analyst</h4><p>Identity verification, sanctions screening, due diligence, reporting, and ongoing monitoring.</p></div>
-        <div class="uc-card"><h4>Contract Review Assistant</h4><p>First-pass review, clause extraction, risk flagging. The work done, not a tool to do it with.</p></div>
-        <div class="uc-card"><h4>Regulatory Reporting Agent</h4><p>Data gathering, report generation, submission tracking. Accurate, timely, audit-ready.</p></div>
-      </div>
-      <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
-    </section>
-  </div>
-</div>
+<!-- ==================== COMPLIANCE ==================== -->
+<div class="page" id="page-compliance"><div class="container">
+  <section class="sub-hero"><div class="back-link" onclick="showPage('home')">&larr; Solutions</div><div class="section-label">Compliance &amp; Regulatory</div><h1>Reduce risk with automated controls.</h1><p>Deploy capacity for regulatory monitoring, policy checks, and audit-ready documentation — every rule, every time.</p></section>
+  <section class="sub-content">
+    <div class="metrics"><div class="metric"><div class="num" data-count="100">0</div><div class="txt">% audit-ready</div></div><div class="metric"><div class="num">24/7</div><div class="txt">regulatory monitoring</div></div><div class="metric"><div class="num" data-count="80">0</div><div class="txt">% less manual compliance</div></div></div>
+    <div class="uc-grid">
+      <div class="uc-card"><h4>Compliance Monitor</h4><p>Track regulatory changes, flag impacts, alert on deadlines. Full audit trails and immutable logs.</p></div>
+      <div class="uc-card"><h4>KYC / AML Analyst</h4><p>Identity verification, sanctions screening, due diligence, reporting, and ongoing monitoring.</p></div>
+      <div class="uc-card"><h4>Contract Review Assistant</h4><p>First-pass review, clause extraction, risk flagging. The work done, not a tool to do it with.</p></div>
+      <div class="uc-card"><h4>Regulatory Reporting Agent</h4><p>Data gathering, report generation, submission tracking. Accurate, timely, audit-ready.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
+  </section>
+</div></div>
 
-<!-- ==================== ACCOUNTING & TAX ==================== -->
-<div class="page" id="page-finance">
-  <div class="container">
-    <section class="sub-hero">
-      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
-      <div class="section-label">Accounting &amp; Tax</div>
-      <h1>Accelerate reporting and accuracy.</h1>
-      <p>Deploy capacity for reconciliation, expense management, and financial reporting — every number accounted for.</p>
-    </section>
-    <section class="sub-content">
-      <div class="metrics">
-        <div class="metric"><div class="num">10x</div><div class="txt">faster reporting</div></div>
-        <div class="metric"><div class="num">100%</div><div class="txt">audit-ready accuracy</div></div>
-        <div class="metric"><div class="num">80%</div><div class="txt">less manual processing</div></div>
-      </div>
-      <div class="uc-grid">
-        <div class="uc-card"><h4>Account Reconciliation Agent</h4><p>Periodic reconciliation, discrepancy detection, compliance checks, and structured audit reports.</p></div>
-        <div class="uc-card"><h4>Expense Management Assistant</h4><p>Full lifecycle — submission, extraction, policy validation, approval, reimbursement, reporting.</p></div>
-        <div class="uc-card"><h4>Financial Reporting Specialist</h4><p>Data aggregation, report generation, variance analysis. Accurate, timely, consistent.</p></div>
-        <div class="uc-card"><h4>Tax Preparation Assistant</h4><p>Document gathering, data validation, filing preparation, and deadline tracking.</p></div>
-      </div>
-      <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
-    </section>
-  </div>
-</div>
+<!-- ==================== FINANCE ==================== -->
+<div class="page" id="page-finance"><div class="container">
+  <section class="sub-hero"><div class="back-link" onclick="showPage('home')">&larr; Solutions</div><div class="section-label">Accounting &amp; Tax</div><h1>Accelerate reporting and accuracy.</h1><p>Deploy capacity for reconciliation, expense management, and financial reporting — every number accounted for.</p></section>
+  <section class="sub-content">
+    <div class="metrics"><div class="metric"><div class="num" data-count="10">0</div><div class="txt">x faster reporting</div></div><div class="metric"><div class="num" data-count="100">0</div><div class="txt">% audit-ready accuracy</div></div><div class="metric"><div class="num" data-count="80">0</div><div class="txt">% less manual processing</div></div></div>
+    <div class="uc-grid">
+      <div class="uc-card"><h4>Account Reconciliation Agent</h4><p>Periodic reconciliation, discrepancy detection, compliance checks, and structured audit reports.</p></div>
+      <div class="uc-card"><h4>Expense Management Assistant</h4><p>Full lifecycle — submission, extraction, policy validation, approval, reimbursement, reporting.</p></div>
+      <div class="uc-card"><h4>Financial Reporting Specialist</h4><p>Data aggregation, report generation, variance analysis. Accurate, timely, consistent.</p></div>
+      <div class="uc-card"><h4>Tax Preparation Assistant</h4><p>Document gathering, data validation, filing preparation, and deadline tracking.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
+  </section>
+</div></div>
 
-<!-- ==================== SALES & MARKETING ==================== -->
-<div class="page" id="page-sales">
-  <div class="container">
-    <section class="sub-hero">
-      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
-      <div class="section-label">Sales &amp; Marketing</div>
-      <h1>Multiply campaign effectiveness and ROI.</h1>
-      <p>Deploy capacity for lead management, market intelligence, and campaign execution — outcomes, not overhead.</p>
-    </section>
-    <section class="sub-content">
-      <div class="metrics">
-        <div class="metric"><div class="num">10x</div><div class="txt">lead follow-up capacity</div></div>
-        <div class="metric"><div class="num">24/7</div><div class="txt">pipeline coverage</div></div>
-        <div class="metric"><div class="num">3x</div><div class="txt">conversion improvement</div></div>
-      </div>
-      <div class="uc-grid">
-        <div class="uc-card"><h4>Sales Development Rep</h4><p>Lead follow-up, qualification, pipeline tracking. Every opportunity pursued, none forgotten.</p></div>
-        <div class="uc-card"><h4>Market Intelligence Analyst</h4><p>Source monitoring, relevance scoring, competitive tracking, and briefing generation.</p></div>
-        <div class="uc-card"><h4>Campaign Coordinator</h4><p>Content distribution, engagement tracking, A/B management, and performance reporting.</p></div>
-        <div class="uc-card"><h4>Lead Enrichment Agent</h4><p>Data enrichment, scoring, segmentation, and routing. Better leads, faster qualification.</p></div>
-      </div>
-      <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
-    </section>
-  </div>
-</div>
+<!-- ==================== SALES ==================== -->
+<div class="page" id="page-sales"><div class="container">
+  <section class="sub-hero"><div class="back-link" onclick="showPage('home')">&larr; Solutions</div><div class="section-label">Sales &amp; Marketing</div><h1>Multiply campaign effectiveness and ROI.</h1><p>Deploy capacity for lead management, market intelligence, and campaign execution — outcomes, not overhead.</p></section>
+  <section class="sub-content">
+    <div class="metrics"><div class="metric"><div class="num" data-count="10">0</div><div class="txt">x lead follow-up capacity</div></div><div class="metric"><div class="num">24/7</div><div class="txt">pipeline coverage</div></div><div class="metric"><div class="num" data-count="3">0</div><div class="txt">x conversion improvement</div></div></div>
+    <div class="uc-grid">
+      <div class="uc-card"><h4>Sales Development Rep</h4><p>Lead follow-up, qualification, pipeline tracking. Every opportunity pursued, none forgotten.</p></div>
+      <div class="uc-card"><h4>Market Intelligence Analyst</h4><p>Source monitoring, relevance scoring, competitive tracking, and briefing generation.</p></div>
+      <div class="uc-card"><h4>Campaign Coordinator</h4><p>Content distribution, engagement tracking, A/B management, and performance reporting.</p></div>
+      <div class="uc-card"><h4>Lead Enrichment Agent</h4><p>Data enrichment, scoring, segmentation, and routing. Better leads, faster qualification.</p></div>
+    </div>
+    <div style="text-align:center;margin-top:40px;"><a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a></div>
+  </section>
+</div></div>
 
 <!-- FOOTER -->
-<footer>
+<footer role="contentinfo">
   <div class="footer-inner">
     <span>ExCom AI &middot; Dubai, UAE</span>
-    <a href="mailto:info@excom.ai">info@excom.ai</a>
+    <div style="display:flex;gap:16px;">
+      <a href="privacy.html">Privacy</a>
+      <a href="mailto:info@excom.ai">info@excom.ai</a>
+    </div>
   </div>
 </footer>
 
 <script>
+// Particle background
+(function(){
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const count = window.innerWidth < 768 ? 30 : 60;
+
+  function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.5
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p, i) => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+      if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,180,216,0.15)'; ctx.fill();
+      // Connect nearby particles
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = p.x - particles[j].x, dy = p.y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = 'rgba(0,180,216,' + (0.06 * (1 - dist/120)) + ')';
+          ctx.stroke();
+        }
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// Cursor glow
+document.addEventListener('mousemove', e => {
+  const g = document.getElementById('cursorGlow');
+  g.style.left = e.clientX + 'px';
+  g.style.top = e.clientY + 'px';
+});
+
+// Sticky nav
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Page navigation
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const page = document.getElementById('page-' + id);
   page.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  // Re-trigger animations on sub-page elements
-  page.querySelectorAll('.metric .num, .sub-hero h1, .sub-hero > p, .back-link').forEach(el => {
-    el.style.animation = 'none';
-    el.offsetHeight;
-    el.style.animation = '';
+  closeMobile();
+  // Re-trigger animations
+  page.querySelectorAll('.sub-hero h1, .sub-hero > p, .back-link').forEach(el => {
+    el.style.animation = 'none'; el.offsetHeight; el.style.animation = '';
   });
+  // Counter animation
+  setTimeout(() => animateCounters(page), 300);
   initReveal();
 }
 
@@ -697,35 +811,40 @@ function scrollTo_(id) {
   }, 150);
 }
 
+// Mobile menu
 function toggleMobileMenu() {
-  const nc = document.getElementById('navCenter');
-  if (nc.style.display === 'flex') {
-    nc.style.display = '';
-    return;
-  }
-  nc.style.display = 'flex';
-  nc.style.position = 'absolute';
-  nc.style.top = '60px';
-  nc.style.left = '0';
-  nc.style.right = '0';
-  nc.style.background = 'var(--bg)';
-  nc.style.padding = '20px 24px';
-  nc.style.flexDirection = 'column';
-  nc.style.borderBottom = '1px solid var(--border)';
-  nc.style.zIndex = '200';
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// Counter animation
+function animateCounters(container) {
+  container.querySelectorAll('.num[data-count]').forEach(el => {
+    const target = parseInt(el.dataset.count);
+    const duration = 1200;
+    const start = performance.now();
+    el.textContent = '0';
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased);
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  });
 }
 
 // Scroll reveal
 function initReveal() {
-  const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('visible');
     });
-  }, { threshold: 0.15 });
-  reveals.forEach(el => {
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => {
     el.classList.remove('visible');
     observer.observe(el);
   });
@@ -733,7 +852,5 @@ function initReveal() {
 
 document.addEventListener('DOMContentLoaded', initReveal);
 </script>
-
 </body>
 </html>
-<!-- deployed -->
