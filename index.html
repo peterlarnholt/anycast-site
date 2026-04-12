@@ -1,712 +1,738 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anycast — AI Team Members for Every Group Chat</title>
-    <meta name="description" content="Anycast by ExCom.ai — Deploy isolated AI assistants into Telegram groups. Each team gets their own AI with persistent memory, file handling, and tool access.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --cyan: #4FC3F7;
-            --cyan-dark: #0288D1;
-            --cyan-light: #B3E5FC;
-            --purple: #AB47BC;
-            --navy: #0F172A;
-            --slate: #64748B;
-            --white: #FFFFFF;
-            --amber: #FBBF24;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anycast — Headcount you deploy in minutes</title>
+<style>
+  :root {
+    --bg: #0a0e17;
+    --card: #141c30;
+    --border: #1e2a45;
+    --cyan: #00b4d8;
+    --white: #ffffff;
+    --light: #c8d0e0;
+    --gray: #8892a4;
+    --dark-gray: #3a4560;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--light); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { opacity: 0.85; }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10,14,23,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1060px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 60px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .nav-logo .icon {
+    width: 28px; height: 28px; border-radius: 6px; overflow: hidden;
+  }
+  .nav-logo .icon img {
+    width: 100%; height: 100%; display: block;
+  }
+  .nav-logo span { font-weight: 700; font-size: 17px; color: var(--white); }
+  .nav-center { display: flex; gap: 28px; align-items: center; }
+  .nav-center > a, .nav-center .dropdown > a {
+    color: var(--gray); font-size: 13px; font-weight: 500;
+    letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer;
+    transition: color 0.2s;
+  }
+  .nav-center > a:hover, .nav-center .dropdown > a:hover { color: var(--white); }
+  .dropdown { position: relative; }
+  .dropdown-menu {
+    display: none; position: absolute; top: 36px; left: 50%; transform: translateX(-50%);
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px 0; min-width: 440px; z-index: 200;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+  .dropdown:hover .dropdown-menu { display: flex; }
+  .dropdown-col { flex: 1; padding: 0 24px; }
+  .dropdown-col:first-child { border-right: 1px solid var(--border); }
+  .dropdown-col h4 {
+    font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--dark-gray); margin-bottom: 12px;
+  }
+  .dropdown-col a {
+    display: block; padding: 7px 0; font-size: 13px; color: var(--light);
+    text-transform: none; letter-spacing: 0; font-weight: 400; transition: color 0.2s;
+  }
+  .dropdown-col a:hover { color: var(--cyan); }
+  .btn {
+    display: inline-block; padding: 10px 24px; border-radius: 6px;
+    font-weight: 600; font-size: 13px; cursor: pointer; border: none; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--cyan); color: var(--bg); }
+  .btn-primary:hover { background: #00a0c0; color: var(--bg); }
+  .nav-toggle { display: none; background: none; border: none; color: var(--white); font-size: 22px; cursor: pointer; }
+  @media (max-width: 768px) {
+    .nav-center { display: none; }
+    .nav-toggle { display: block; }
+    .dropdown-menu { min-width: 300px; left: auto; right: -80px; transform: none; }
+  }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--navy);
-            color: var(--white);
-            overflow-x: hidden;
-        }
+  /* LAYOUT */
+  .container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
 
-        /* Nav */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-            padding: 1.2rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(20px);
-            background: rgba(15, 23, 42, 0.8);
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    padding-top: 60px; text-align: center;
+  }
+  .hero-content { max-width: 720px; }
+  .hero .label {
+    font-size: 13px; color: var(--gray); letter-spacing: 1.5px; margin-bottom: 20px;
+    text-transform: uppercase; opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px); font-weight: 800;
+    line-height: 1.08; color: var(--white);
+    opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .hero .accent { color: var(--cyan); }
+  .hero .subtitle {
+    font-size: 18px; color: var(--gray); font-weight: 300;
+    margin: 24px 0 36px;
+    opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .hero .btn {
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+    padding: 14px 32px; font-size: 15px;
+  }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            text-decoration: none;
-        }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
 
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 1.2rem;
-            color: var(--white);
-        }
+  /* STRIP */
+  .strip {
+    padding: 40px 0; text-align: center;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  }
+  .strip p { font-size: 18px; color: var(--gray); font-weight: 300; }
+  .strip strong { color: var(--white); font-weight: 600; }
 
-        .logo-text {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--white);
-            letter-spacing: -0.02em;
-        }
+  /* SECTIONS */
+  .section { padding: 80px 0; text-align: center; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    color: var(--cyan); text-transform: uppercase; margin-bottom: 10px;
+  }
+  .section h2 {
+    font-size: clamp(22px, 3vw, 30px); font-weight: 800; color: var(--white); margin-bottom: 6px;
+  }
+  .section .lead { font-size: 14px; color: var(--gray); margin-bottom: 36px; }
 
-        .logo-text span { color: var(--cyan); }
+  /* SOL GRID */
+  .sol-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    text-align: left; max-width: 700px; margin: 0 auto;
+  }
+  @media (max-width: 640px) { .sol-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .sol-col h3 {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px;
+    color: var(--dark-gray); text-transform: uppercase; margin-bottom: 16px;
+  }
+  .sol-item {
+    display: block; padding: 10px 0; border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: all 0.3s;
+  }
+  .sol-item:last-child { border-bottom: none; }
+  .sol-item:hover { border-bottom-color: var(--cyan); padding-left: 8px; }
+  .sol-item:hover .sol-title { color: var(--cyan); }
+  .sol-title { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 2px; transition: all 0.3s; }
+  .sol-desc { font-size: 12px; color: var(--gray); }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
+  /* TRUST */
+  .badges {
+    display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;
+  }
+  .badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--dark-gray); }
+  .badge .dot {
+    width: 5px; height: 5px; background: var(--cyan); border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
 
-        .nav-links a {
-            color: var(--slate);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+  /* CTA */
+  .cta-section {
+    padding: 80px 0; text-align: center; border-top: 1px solid var(--border);
+  }
+  .cta-section h2 {
+    font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: var(--white); margin-bottom: 6px;
+  }
+  .cta-section .accent { color: var(--cyan); }
+  .cta-section p { font-size: 16px; color: var(--gray); margin: 12px 0 28px; }
 
-        .nav-links a:hover { color: var(--white); }
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; }
+  .footer-inner {
+    max-width: 1060px; margin: 0 auto; padding: 0 24px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-inner span, .footer-inner a { font-size: 12px; color: var(--dark-gray); }
+  .footer-inner a:hover { color: var(--cyan); }
 
-        .nav-cta {
-            background: var(--cyan);
-            color: var(--navy) !important;
-            padding: 0.6rem 1.4rem;
-            border-radius: 50px;
-            font-weight: 600 !important;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
+  /* SUB-PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+  .sub-hero {
+    padding: 120px 0 40px; text-align: center;
+  }
+  .sub-hero h1 {
+    font-size: clamp(26px, 4vw, 38px); font-weight: 800; color: var(--white); margin-bottom: 10px;
+    opacity: 0; animation: fadeUp 0.6s 0.1s forwards;
+  }
+  .sub-hero > p {
+    font-size: 16px; color: var(--gray); max-width: 560px; margin: 0 auto;
+    opacity: 0; animation: fadeUp 0.6s 0.3s forwards;
+  }
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--cyan); cursor: pointer; margin-bottom: 24px;
+    transition: gap 0.2s;
+    opacity: 0; animation: fadeIn 0.4s 0.05s forwards;
+  }
+  .back-link:hover { gap: 10px; }
+  .sub-content { padding: 20px 0 80px; }
 
-        .nav-cta:hover {
-            background: var(--cyan-dark);
-            color: var(--white) !important;
-            transform: translateY(-1px);
-        }
+  /* METRICS */
+  .metrics { display: flex; gap: 40px; justify-content: center; margin: 32px 0; flex-wrap: wrap; }
+  .metric { text-align: center; }
+  .metric .num {
+    font-size: 36px; font-weight: 800; color: var(--cyan);
+    opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .metric .txt { font-size: 11px; color: var(--gray); margin-top: 2px; }
 
-        /* Hero */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 8rem 2rem 4rem;
-            position: relative;
-        }
+  /* USE CASE CARDS */
+  .uc-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    max-width: 740px; margin: 24px auto; text-align: left;
+  }
+  @media (max-width: 640px) { .uc-grid { grid-template-columns: 1fr; } }
+  .uc-card {
+    background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--cyan);
+    border-radius: 8px; padding: 20px;
+    transition: all 0.3s; cursor: default;
+  }
+  .uc-card:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,180,216,0.08); }
+  .uc-card h4 { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .uc-card p { font-size: 12px; color: var(--gray); }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -40%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 800px;
-            height: 800px;
-            background: radial-gradient(circle, rgba(79,195,247,0.12) 0%, transparent 70%);
-            pointer-events: none;
-        }
+  /* BEFORE/AFTER */
+  .ba-row {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 0;
+    align-items: center; margin: 32px auto; max-width: 740px; text-align: left;
+  }
+  @media (max-width: 640px) { .ba-row { grid-template-columns: 1fr; } }
+  .ba-col { padding: 20px; border-radius: 8px; }
+  .ba-col.before { background: var(--card); border: 1px solid var(--border); }
+  .ba-col.after { background: #0d1a2d; border: 1px solid var(--cyan); }
+  .ba-arrow { text-align: center; font-size: 24px; color: var(--cyan); padding: 0 16px; }
+  @media (max-width: 640px) { .ba-arrow { transform: rotate(90deg); padding: 8px 0; } }
+  .ba-col h4 {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .ba-col.before h4 { color: var(--gray); }
+  .ba-col.after h4 { color: var(--cyan); }
+  .ba-col .ba-item { font-size: 13px; color: var(--light); margin-bottom: 6px; padding-left: 14px; position: relative; }
+  .ba-col .ba-item::before {
+    content: ''; position: absolute; left: 0; top: 6px;
+    width: 5px; height: 5px; border-radius: 50%;
+  }
+  .ba-col.before .ba-item::before { background: var(--gray); }
+  .ba-col.after .ba-item::before { background: var(--cyan); }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(79,195,247,0.1);
-            border: 1px solid rgba(79,195,247,0.2);
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            color: var(--cyan);
-            margin-bottom: 2rem;
-            animation: fadeInUp 0.8s ease;
-        }
-
-        .hero-badge .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--cyan);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        h1 {
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 900;
-            line-height: 1.05;
-            letter-spacing: -0.03em;
-            margin-bottom: 1.5rem;
-            animation: fadeInUp 0.8s ease 0.1s both;
-        }
-
-        h1 .highlight {
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-sub {
-            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-            color: var(--slate);
-            max-width: 600px;
-            line-height: 1.6;
-            margin-bottom: 2.5rem;
-            animation: fadeInUp 0.8s ease 0.2s both;
-        }
-
-        .hero-cta-group {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-            animation: fadeInUp 0.8s ease 0.3s both;
-        }
-
-        .cta-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: var(--cyan);
-            color: var(--navy);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-        }
-
-        .cta-primary:hover {
-            background: var(--cyan-dark);
-            color: var(--white);
-            transform: translateY(-2px);
-            box-shadow: 0 20px 40px rgba(79,195,247,0.3);
-        }
-
-        .cta-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: transparent;
-            color: var(--slate);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.3s;
-        }
-
-        .cta-secondary:hover {
-            border-color: rgba(255,255,255,0.3);
-            color: var(--white);
-        }
-
-        /* Telegram mockup */
-        .phone-section {
-            padding: 2rem 2rem 6rem;
-            display: flex;
-            justify-content: center;
-        }
-
-        .phone {
-            width: 340px;
-            background: #1E293B;
-            border-radius: 40px;
-            padding: 12px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .phone-screen {
-            background: #0F172A;
-            border-radius: 30px;
-            overflow: hidden;
-        }
-
-        .phone-header {
-            background: #1C2B3A;
-            padding: 2.5rem 1rem 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .phone-avatar {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 0.8rem;
-        }
-
-        .phone-name {
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        .phone-name small {
-            display: block;
-            font-weight: 400;
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.5);
-        }
-
-        .chat-area {
-            padding: 1rem 0.8rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-            min-height: 380px;
-        }
-
-        .msg {
-            max-width: 85%;
-            padding: 0.6rem 0.9rem;
-            border-radius: 12px;
-            font-size: 0.82rem;
-            line-height: 1.5;
-            animation: msgAppear 0.5s ease both;
-        }
-
-        .msg-user {
-            align-self: flex-end;
-            background: #2B5278;
-            border-bottom-right-radius: 4px;
-        }
-
-        .msg-bot {
-            align-self: flex-start;
-            background: #1E293B;
-            border-bottom-left-radius: 4px;
-        }
-
-        .msg-time {
-            font-size: 0.6rem;
-            color: rgba(255,255,255,0.4);
-            text-align: right;
-            margin-top: 0.2rem;
-        }
-
-        .msg:nth-child(1) { animation-delay: 0.5s; }
-        .msg:nth-child(2) { animation-delay: 1.2s; }
-        .msg:nth-child(3) { animation-delay: 2s; }
-        .msg:nth-child(4) { animation-delay: 3s; }
-        .msg:nth-child(5) { animation-delay: 3.8s; }
-
-        /* Features */
-        .features {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .features-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .features-header h2 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-        }
-
-        .features-header p {
-            color: var(--slate);
-            font-size: 1.15rem;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .feature-card {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s;
-        }
-
-        .feature-card:hover {
-            border-color: rgba(79,195,247,0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-
-        .feature-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-        .feature-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .feature-card p { color: var(--slate); font-size: 0.95rem; line-height: 1.6; }
-
-        /* How it works */
-        .how {
-            padding: 6rem 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .how h2 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 3rem;
-        }
-
-        .steps {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .step {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            text-align: left;
-            background: rgba(30,41,59,0.3);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 16px;
-            padding: 1.5rem 2rem;
-        }
-
-        .step-num {
-            width: 50px;
-            height: 50px;
-            min-width: 50px;
-            background: linear-gradient(135deg, var(--cyan), var(--purple));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.3rem;
-        }
-
-        .step-text h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
-        .step-text p { color: var(--slate); font-size: 0.9rem; line-height: 1.5; }
-
-        /* Use cases banner */
-        .use-cases {
-            margin: 4rem 2rem;
-            max-width: 1000px;
-            margin-left: auto;
-            margin-right: auto;
-            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
-            border: 1px solid rgba(79,195,247,0.2);
-            border-radius: 24px;
-            padding: 3rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .use-cases::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(79,195,247,0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .use-cases h3 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-        }
-
-        .use-case-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            text-align: left;
-        }
-
-        .use-case-item {
-            padding: 1rem;
-        }
-
-        .use-case-item h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.3rem;
-            color: var(--cyan);
-        }
-
-        .use-case-item p {
-            color: var(--slate);
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid rgba(255,255,255,0.06);
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .footer-brand {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-brand span { font-weight: 700; font-size: 1.1rem; }
-        footer p { color: var(--slate); font-size: 0.85rem; }
-        footer a { color: var(--cyan); text-decoration: none; }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        @keyframes msgAppear {
-            from { opacity: 0; transform: translateY(10px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        @media (max-width: 768px) {
-            .hero { padding: 7rem 1.5rem 3rem; }
-            .phone { width: 280px; }
-            .step { flex-direction: column; text-align: center; }
-            .features-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-            .use-case-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .reveal.visible {
+    opacity: 1; transform: translateY(0);
+  }
+</style>
 </head>
 <body>
 
-    <nav>
-        <a href="#" class="logo">
-            <div class="logo-icon">A</div>
-            <span class="logo-text">any<span>cast</span></span>
-        </a>
-        <div class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#how">How it works</a>
-            <a href="https://excom.ai">ExCom.ai</a>
-            <a href="#start" class="nav-cta">Get started</a>
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">
+      <div class="icon"><img src="data:image/png;base64,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" alt="Anycast"></div>
+      <span>anycast</span>
+    </div>
+    <div class="nav-center" id="navCenter">
+      <a href="#" onclick="scrollTo_('trust')">Trust</a>
+      <div class="dropdown">
+        <a href="#">Solutions &#9662;</a>
+        <div class="dropdown-menu">
+          <div class="dropdown-col">
+            <h4>By Industry</h4>
+            <a href="#" onclick="showPage('banking')">Banking</a>
+            <a href="#" onclick="showPage('healthcare')">Healthcare</a>
+            <a href="#" onclick="showPage('insurance')">Insurance</a>
+            <a href="#" onclick="showPage('telecom')">Telecom</a>
+            <a href="#" onclick="showPage('energy')">Energy</a>
+          </div>
+          <div class="dropdown-col">
+            <h4>By Solution</h4>
+            <a href="#" onclick="showPage('support')">Support &amp; Helpdesk</a>
+            <a href="#" onclick="showPage('hr')">Operations &amp; HR</a>
+            <a href="#" onclick="showPage('compliance')">Compliance &amp; Regulatory</a>
+            <a href="#" onclick="showPage('finance')">Accounting &amp; Tax</a>
+            <a href="#" onclick="showPage('sales')">Sales &amp; Marketing</a>
+          </div>
         </div>
-    </nav>
+      </div>
+      <a href="#" onclick="scrollTo_('insights')">Insights</a>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a href="#" class="btn btn-primary">Book a demo</a>
+      <button class="nav-toggle" onclick="toggleMobileMenu()">&#9776;</button>
+    </div>
+  </div>
+</nav>
 
+<!-- ==================== HOME ==================== -->
+<div class="page active" id="page-home">
+  <div class="container">
     <section class="hero">
-        <div class="hero-badge">
-            <span class="dot"></span>
-            Now available on Telegram
-        </div>
-        <h1>AI that joins<br><span class="highlight">your team.</span></h1>
-        <p class="hero-sub">Deploy isolated AI assistants into Telegram group chats. Each team gets their own AI with persistent memory, tools, and file handling.</p>
-        <div class="hero-cta-group">
-            <a href="#start" class="cta-primary">
-                <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                Add to Telegram
-            </a>
-            <a href="#features" class="cta-secondary">See what it does ↓</a>
-        </div>
+      <div class="hero-content">
+        <div class="label">The service layer for enterprise AI</div>
+        <h1>Run like a 20-person operation.<br><span class="accent">Stay a 5-person company.</span></h1>
+        <p class="subtitle">Headcount you deploy in minutes.<br>Not software you implement in months.</p>
+        <a href="#" class="btn btn-primary">Book a demo</a>
+      </div>
     </section>
+  </div>
 
-    <section class="phone-section">
-        <div class="phone">
-            <div class="phone-screen">
-                <div class="phone-header">
-                    <div class="phone-avatar">A</div>
-                    <div class="phone-name">
-                        Product Team
-                        <small>Anycast, Peter, Molle, Alex</small>
-                    </div>
-                </div>
-                <div class="chat-area">
-                    <div class="msg msg-user">
-                        @anycast summarize yesterday's decisions
-                        <div class="msg-time">09:15</div>
-                    </div>
-                    <div class="msg msg-bot">
-                        Yesterday's key decisions:<br><br>
-                        1. Launch date moved to June 15<br>
-                        2. Pricing: $29/mo starter, $99/mo pro<br>
-                        3. Peter owns onboarding flow<br>
-                        4. Molle to finalize landing page by Friday
-                        <div class="msg-time">09:15</div>
-                    </div>
-                    <div class="msg msg-user">
-                        Create a PDF report from the Q1 data
-                        <div class="msg-time">09:16</div>
-                    </div>
-                    <div class="msg msg-bot">
-                        Working on it. I'll send it here when ready.
-                        <div class="msg-time">09:16</div>
-                    </div>
-                    <div class="msg msg-bot">
-                        Done — Q1 report attached. 12 pages, covers revenue, churn, and pipeline.
-                        <div class="msg-time">09:17</div>
-                    </div>
-                </div>
-            </div>
+  <div class="strip reveal">
+    <div class="container">
+      <p><strong>We don't sell software.</strong> We deploy team members.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <section class="section reveal" id="solutions">
+      <div class="section-label">Solutions</div>
+      <h2>Find your industry. Deploy your team.</h2>
+      <p class="lead">Every role is a team member, not a feature.</p>
+      <div class="sol-grid">
+        <div class="sol-col">
+          <h3>By Industry</h3>
+          <div class="sol-item" onclick="showPage('banking')"><div class="sol-title">Banking</div><div class="sol-desc">Boost lending and service efficiency</div></div>
+          <div class="sol-item" onclick="showPage('healthcare')"><div class="sol-title">Healthcare</div><div class="sol-desc">Improve care delivery and patient flow</div></div>
+          <div class="sol-item" onclick="showPage('insurance')"><div class="sol-title">Insurance</div><div class="sol-desc">Optimize claims and policy processes</div></div>
+          <div class="sol-item" onclick="showPage('telecom')"><div class="sol-title">Telecom</div><div class="sol-desc">Enhance network and service operations</div></div>
+          <div class="sol-item" onclick="showPage('energy')"><div class="sol-title">Energy</div><div class="sol-desc">Optimize field and safety operations</div></div>
         </div>
+        <div class="sol-col">
+          <h3>By Solution</h3>
+          <div class="sol-item" onclick="showPage('support')"><div class="sol-title">Support &amp; Helpdesk</div><div class="sol-desc">Improve service speed and quality</div></div>
+          <div class="sol-item" onclick="showPage('hr')"><div class="sol-title">Operations &amp; HR</div><div class="sol-desc">Automate workforce processes</div></div>
+          <div class="sol-item" onclick="showPage('compliance')"><div class="sol-title">Compliance &amp; Regulatory</div><div class="sol-desc">Reduce risk with automated controls</div></div>
+          <div class="sol-item" onclick="showPage('finance')"><div class="sol-title">Accounting &amp; Tax</div><div class="sol-desc">Accelerate reporting and accuracy</div></div>
+          <div class="sol-item" onclick="showPage('sales')"><div class="sol-title">Sales &amp; Marketing</div><div class="sol-desc">Multiply campaign effectiveness and ROI</div></div>
+        </div>
+      </div>
     </section>
+  </div>
 
-    <section class="features" id="features">
-        <div class="features-header">
-            <h2>One AI per team.<br>Fully isolated.</h2>
-            <p>Each group chat gets a dedicated AI assistant with its own memory, workspace, and tools.</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🔐</div>
-                <h3>Container Isolation</h3>
-                <p>Every team runs in its own container. Separate memory, files, credentials, and context. Zero data leakage between groups.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🧠</div>
-                <h3>Persistent Memory</h3>
-                <p>Your AI remembers project context, API keys, team preferences, and past decisions. It gets smarter the more you use it.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📎</div>
-                <h3>File Generation</h3>
-                <p>PDFs, images, spreadsheets, presentations, code. Your AI creates files and sends them directly in the chat.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔧</div>
-                <h3>Tool Integration</h3>
-                <p>GitHub, email (Resend), Airtable, BigQuery, REST APIs. Your AI uses the same tools your team uses.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💻</div>
-                <h3>Code Execution</h3>
-                <p>Python, Node.js, shell. Your AI runs scripts, scrapes the web, queries databases, and processes data in real-time.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⏰</div>
-                <h3>Scheduled Tasks</h3>
-                <p>Reminders, recurring reports, deadline tracking. Your AI follows up automatically so nothing falls through the cracks.</p>
-            </div>
-        </div>
+  <div class="container">
+    <section class="section reveal" id="trust">
+      <div class="section-label">Trust</div>
+      <h2>Built for regulated industries.</h2>
+      <div class="badges">
+        <span class="badge"><span class="dot"></span>GDPR compliant</span>
+        <span class="badge"><span class="dot"></span>AES-256 encryption</span>
+        <span class="badge"><span class="dot"></span>Zero AI training on your data</span>
+        <span class="badge"><span class="dot"></span>Full audit trails</span>
+        <span class="badge"><span class="dot"></span>Data deleted on termination</span>
+      </div>
     </section>
+  </div>
 
-    <section class="how" id="how">
-        <h2>Up and running in 60 seconds</h2>
-        <div class="steps">
-            <div class="step">
-                <div class="step-num">1</div>
-                <div class="step-text">
-                    <h3>Add Anycast to your Telegram group</h3>
-                    <p>Invite the bot. A dedicated container spins up for your team instantly.</p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-num">2</div>
-                <div class="step-text">
-                    <h3>Share your context</h3>
-                    <p>Give it API keys, project details, team roles. It stores them securely and uses them silently.</p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-num">3</div>
-                <div class="step-text">
-                    <h3>Work together</h3>
-                    <p>Everyone in the group can interact. The AI tracks context, creates files, runs code, and remembers everything.</p>
-                </div>
-            </div>
-        </div>
+  <div class="container">
+    <section class="section reveal" id="insights">
+      <div class="section-label">Insights</div>
+      <h2>The service, not the tool.</h2>
+      <p class="lead" style="max-width:560px;margin-left:auto;margin-right:auto;">Every industry has the same problem: too much process, not enough people. The companies that win aren't the ones with the best software — they're the ones with the most capacity.</p>
     </section>
+  </div>
 
-    <section class="use-cases">
-        <h3>Built for teams that <span style="color: var(--cyan)">ship</span></h3>
-        <div class="use-case-grid">
-            <div class="use-case-item">
-                <h4>Startups</h4>
-                <p>GTM strategy, lead scraping, email campaigns, investor updates. One AI for the whole founding team.</p>
-            </div>
-            <div class="use-case-item">
-                <h4>Product Teams</h4>
-                <p>Sprint summaries, GitHub integration, bug triage, backlog generation. Ship faster with AI in the loop.</p>
-            </div>
-            <div class="use-case-item">
-                <h4>Consulting</h4>
-                <p>Client research, report generation, data analysis, competitive intelligence. Per-client isolation built in.</p>
-            </div>
-            <div class="use-case-item">
-                <h4>Research</h4>
-                <p>Literature review, data collection, API integration, visualization. Your AI analyst that never sleeps.</p>
-            </div>
-        </div>
+  <div class="container">
+    <section class="cta-section reveal">
+      <h2>You don't need a bigger team.<br><span class="accent">You need bigger capacity.</span></h2>
+      <p>Deploy your first workspace.</p>
+      <a href="#" class="btn btn-primary" style="padding:14px 36px;font-size:15px;">Book a demo</a>
     </section>
+  </div>
+</div>
 
-    <section class="hero" style="min-height: auto; padding: 4rem 2rem 6rem;" id="start">
-        <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 1rem;">Ready to add AI to your team?</h2>
-        <p class="hero-sub" style="margin-bottom: 2rem;">Add Anycast to your Telegram group and start working together in seconds.</p>
-        <a href="#" class="cta-primary">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="width:24px;height:24px"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-            Add to Telegram
-        </a>
+<!-- ==================== BANKING ==================== -->
+<div class="page" id="page-banking">
+  <div class="container">
+    <section class="sub-hero">
+      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
+      <div class="section-label">Banking</div>
+      <h1>Boost lending and service efficiency.</h1>
+      <p>Deploy capacity across customer service, compliance, and financial processing — without growing your team.</p>
     </section>
+    <section class="sub-content">
+      <div class="metrics">
+        <div class="metric"><div class="num">80%</div><div class="txt">faster KYC processing</div></div>
+        <div class="metric"><div class="num">10x</div><div class="txt">loan volume capacity</div></div>
+        <div class="metric"><div class="num">100%</div><div class="txt">audit-ready compliance</div></div>
+      </div>
+      <div class="uc-grid">
+        <div class="uc-card"><h4>KYC &amp; AML Analyst</h4><p>Identity verification, sanctions screening, adverse media checks, and risk scoring. Compliant across jurisdictions.</p></div>
+        <div class="uc-card"><h4>Loan Processing Assistant</h4><p>Application intake, document extraction, eligibility pre-checks, and status tracking. Every application complete.</p></div>
+        <div class="uc-card"><h4>Collections Agent</h4><p>Payment reminders via WhatsApp with 98% open rate. Structured escalation. Human intervention only when needed.</p></div>
+        <div class="uc-card"><h4>Compliance Officer</h4><p>Regulatory monitoring, policy checks, audit trails. Certified, audit-ready processes across banking standards.</p></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-col before"><h4>Before</h4><div class="ba-item">KYC takes hours per customer</div><div class="ba-item">70% of loan applications abandoned</div><div class="ba-item">Collections by phone — expensive, ignored</div><div class="ba-item">Compliance tracked manually</div></div>
+        <div class="ba-arrow">&rarr;</div>
+        <div class="ba-col after"><h4>With Anycast</h4><div class="ba-item">KYC completed in minutes</div><div class="ba-item">Conversational applications, 3x completion</div><div class="ba-item">WhatsApp reminders, one-tap payment</div><div class="ba-item">Real-time compliance monitoring</div></div>
+      </div>
+      <div style="text-align:center;margin-top:40px;"><a href="#" class="btn btn-primary">Book a demo</a></div>
+    </section>
+  </div>
+</div>
 
-    <footer>
-        <div class="footer-brand">
-            <span>anycast</span>
-        </div>
-        <p>by <a href="https://excom.ai" target="_blank">ExCom.ai</a></p>
-        <p style="margin-top: 0.5rem; font-size: 0.8rem;">&copy; 2026 ExCom.ai. All rights reserved. · <a href="/privacy">Privacy Policy</a></p>
-    </footer>
+<!-- ==================== HEALTHCARE ==================== -->
+<div class="page" id="page-healthcare">
+  <div class="container">
+    <section class="sub-hero">
+      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
+      <div class="section-label">Healthcare</div>
+      <h1>Improve care delivery and patient flow.</h1>
+      <p>Deploy capacity for claims, documentation, and patient coordination — so your clinical team focuses on care.</p>
+    </section>
+    <section class="sub-content">
+      <div class="metrics">
+        <div class="metric"><div class="num">6x</div><div class="txt">faster medical coding</div></div>
+        <div class="metric"><div class="num">80%</div><div class="txt">less manual processing</div></div>
+        <div class="metric"><div class="num">24/7</div><div class="txt">patient coordination</div></div>
+      </div>
+      <div class="uc-grid">
+        <div class="uc-card"><h4>Claims Processing Assistant</h4><p>End-to-end claims handling — intake, validation, policy matching, and approval routing. Days reduced to hours.</p></div>
+        <div class="uc-card"><h4>Medical Coding Specialist</h4><p>Outpatient E/M coding, documentation review, and compliance checks. Accurate, consistent, auditable.</p></div>
+        <div class="uc-card"><h4>Patient Coordinator</h4><p>Appointment scheduling, follow-ups, referral tracking, and care plan reminders. No patient falls through the cracks.</p></div>
+        <div class="uc-card"><h4>Prior Authorization Agent</h4><p>Authorization requests, status tracking, documentation gathering. Reduce denials and delays.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:40px;"><a href="#" class="btn btn-primary">Book a demo</a></div>
+    </section>
+  </div>
+</div>
 
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', e => {
-                e.preventDefault();
-                const target = document.querySelector(a.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-        });
-    </script>
+<!-- ==================== INSURANCE ==================== -->
+<div class="page" id="page-insurance">
+  <div class="container">
+    <section class="sub-hero">
+      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
+      <div class="section-label">Insurance</div>
+      <h1>Optimize claims and policy processes.</h1>
+      <p>Deploy capacity for claims adjudication, underwriting support, and fraud detection — with full audit trails.</p>
+    </section>
+    <section class="sub-content">
+      <div class="metrics">
+        <div class="metric"><div class="num">10x</div><div class="txt">faster claims processing</div></div>
+        <div class="metric"><div class="num">100%</div><div class="txt">audit-ready accuracy</div></div>
+        <div class="metric"><div class="num">80%</div><div class="txt">cost reduction</div></div>
+      </div>
+      <div class="uc-grid">
+        <div class="uc-card"><h4>Claims Adjudicator</h4><p>Evidence review, policy matching, approval routing. End-to-end, cutting turnaround from days to hours.</p></div>
+        <div class="uc-card"><h4>Underwriting Assistant</h4><p>Risk assessment, document analysis, policy structuring. Consistent evaluation every time.</p></div>
+        <div class="uc-card"><h4>Fraud Detection Analyst</h4><p>Pattern recognition, anomaly flagging, cross-reference checks. Catches what humans miss at volume.</p></div>
+        <div class="uc-card"><h4>Policy Admin Assistant</h4><p>Policy updates, renewals, endorsements, customer communications. Accelerated administration.</p></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-col before"><h4>Before</h4><div class="ba-item">Claims Q&A cycles take 10 minutes</div><div class="ba-item">Manual review creates delays and errors</div><div class="ba-item">Fraud detected too late</div></div>
+        <div class="ba-arrow">&rarr;</div>
+        <div class="ba-col after"><h4>With Anycast</h4><div class="ba-item">Claims Q&A reduced to 1 minute</div><div class="ba-item">AI review with human oversight</div><div class="ba-item">Real-time fraud flagging at scale</div></div>
+      </div>
+      <div style="text-align:center;margin-top:40px;"><a href="#" class="btn btn-primary">Book a demo</a></div>
+    </section>
+  </div>
+</div>
+
+<!-- ==================== TELECOM ==================== -->
+<div class="page" id="page-telecom">
+  <div class="container">
+    <section class="sub-hero">
+      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
+      <div class="section-label">Telecom</div>
+      <h1>Enhance network and service operations.</h1>
+      <p>Deploy capacity for customer onboarding, KYC validation, and service operations — at telecom scale.</p>
+    </section>
+    <section class="sub-content">
+      <div class="metrics">
+        <div class="metric"><div class="num">80%</div><div class="txt">faster activation</div></div>
+        <div class="metric"><div class="num">10x</div><div class="txt">onboarding capacity</div></div>
+        <div class="metric"><div class="num">100%</div><div class="txt">regulatory compliance</div></div>
+      </div>
+      <div class="uc-grid">
+        <div class="uc-card"><h4>Customer Onboarding Agent</h4><p>End-to-end KYC validation, cutting activation times from hours to minutes while maintaining compliance.</p></div>
+        <div class="uc-card"><h4>Service Operations Assistant</h4><p>Ticket routing, troubleshooting, escalation management. First-line resolution without the queue.</p></div>
+        <div class="uc-card"><h4>Network Compliance Monitor</h4><p>Regulatory tracking, audit-ready processes, documentation management across telecom standards.</p></div>
+        <div class="uc-card"><h4>Billing &amp; Provisioning Agent</h4><p>Account setup, plan changes, billing inquiries, payment processing. Consistent, accurate, 24/7.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:40px;"><a href="#" class="btn btn-primary">Book a demo</a></div>
+    </section>
+  </div>
+</div>
+
+<!-- ==================== ENERGY ==================== -->
+<div class="page" id="page-energy">
+  <div class="container">
+    <section class="sub-hero">
+      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
+      <div class="section-label">Energy</div>
+      <h1>Optimize field and safety operations.</h1>
+      <p>Deploy capacity for document-heavy, compliance-driven energy operations — safer, smarter, faster.</p>
+    </section>
+    <section class="sub-content">
+      <div class="metrics">
+        <div class="metric"><div class="num">24x</div><div class="txt">faster procurement</div></div>
+        <div class="metric"><div class="num">100%</div><div class="txt">compliance-first</div></div>
+        <div class="metric"><div class="num">80%</div><div class="txt">less manual work</div></div>
+      </div>
+      <div class="uc-grid">
+        <div class="uc-card"><h4>Procurement Assistant</h4><p>Vendor evaluation, document processing, compliance checks. Procurement cycles from 4 hours to 10 minutes.</p></div>
+        <div class="uc-card"><h4>Safety &amp; Compliance Monitor</h4><p>Real-time risk insights, safety requirement tracking, regulatory documentation. Compliance-first.</p></div>
+        <div class="uc-card"><h4>Field Operations Coordinator</h4><p>Work order management, scheduling, progress tracking, and reporting across field teams.</p></div>
+        <div class="uc-card"><h4>Document Processing Specialist</h4><p>Bills of lading, manifests, customs forms, delivery receipts. Extraction, validation, routing.</p></div>
+      </div>
+      <div class="ba-row">
+        <div class="ba-col before"><h4>Before</h4><div class="ba-item">Procurement takes 4 hours</div><div class="ba-item">Manual document processing</div><div class="ba-item">Compliance in spreadsheets</div></div>
+        <div class="ba-arrow">&rarr;</div>
+        <div class="ba-col after"><h4>With Anycast</h4><div class="ba-item">Procurement in 10 minutes</div><div class="ba-item">Automated extraction and validation</div><div class="ba-item">Real-time compliance monitoring</div></div>
+      </div>
+      <div style="text-align:center;margin-top:40px;"><a href="#" class="btn btn-primary">Book a demo</a></div>
+    </section>
+  </div>
+</div>
+
+<!-- ==================== SUPPORT & HELPDESK ==================== -->
+<div class="page" id="page-support">
+  <div class="container">
+    <section class="sub-hero">
+      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
+      <div class="section-label">Support &amp; Helpdesk</div>
+      <h1>Improve service speed and quality.</h1>
+      <p>Deploy capacity to handle customer inquiries, ticket routing, and resolution — 24/7, every channel.</p>
+    </section>
+    <section class="sub-content">
+      <div class="metrics">
+        <div class="metric"><div class="num">24/7</div><div class="txt">availability</div></div>
+        <div class="metric"><div class="num">80%</div><div class="txt">first-contact resolution</div></div>
+        <div class="metric"><div class="num">10x</div><div class="txt">ticket capacity</div></div>
+      </div>
+      <div class="uc-grid">
+        <div class="uc-card"><h4>Customer Support Agent</h4><p>Multi-channel support — chat, email, WhatsApp. Instant responses, intelligent routing, no queue.</p></div>
+        <div class="uc-card"><h4>Ticket Triage Specialist</h4><p>Classification, priority scoring, routing to the right team. Every ticket handled, none lost.</p></div>
+        <div class="uc-card"><h4>Knowledge Base Assistant</h4><p>Answers from your documentation, policies, and FAQs. Consistent, accurate, always current.</p></div>
+        <div class="uc-card"><h4>Escalation Manager</h4><p>Identifies high-priority issues, routes to humans, provides full context. Seamless handoff.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:40px;"><a href="#" class="btn btn-primary">Book a demo</a></div>
+    </section>
+  </div>
+</div>
+
+<!-- ==================== OPERATIONS & HR ==================== -->
+<div class="page" id="page-hr">
+  <div class="container">
+    <section class="sub-hero">
+      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
+      <div class="section-label">Operations &amp; HR</div>
+      <h1>Automate workforce processes.</h1>
+      <p>Deploy capacity for onboarding, policy management, and HR administration — structured, compliant, consistent.</p>
+    </section>
+    <section class="sub-content">
+      <div class="metrics">
+        <div class="metric"><div class="num">80%</div><div class="txt">less admin workload</div></div>
+        <div class="metric"><div class="num">5 min</div><div class="txt">onboarding setup</div></div>
+        <div class="metric"><div class="num">100%</div><div class="txt">policy compliance</div></div>
+      </div>
+      <div class="uc-grid">
+        <div class="uc-card"><h4>Employee Onboarding Coordinator</h4><p>Document collection, system provisioning, policy acknowledgments, welcome workflows. Smooth from day one.</p></div>
+        <div class="uc-card"><h4>HR Admin Assistant</h4><p>Leave requests, policy questions, benefits inquiries, employee data updates. Handled consistently.</p></div>
+        <div class="uc-card"><h4>Expense Management Agent</h4><p>Submission, extraction, policy validation, approval, reimbursement, audit-ready reporting. Full lifecycle.</p></div>
+        <div class="uc-card"><h4>Recruiting Coordinator</h4><p>Resume screening, candidate communication, interview scheduling, pipeline tracking.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:40px;"><a href="#" class="btn btn-primary">Book a demo</a></div>
+    </section>
+  </div>
+</div>
+
+<!-- ==================== COMPLIANCE & REGULATORY ==================== -->
+<div class="page" id="page-compliance">
+  <div class="container">
+    <section class="sub-hero">
+      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
+      <div class="section-label">Compliance &amp; Regulatory</div>
+      <h1>Reduce risk with automated controls.</h1>
+      <p>Deploy capacity for regulatory monitoring, policy checks, and audit-ready documentation — every rule, every time.</p>
+    </section>
+    <section class="sub-content">
+      <div class="metrics">
+        <div class="metric"><div class="num">100%</div><div class="txt">audit-ready</div></div>
+        <div class="metric"><div class="num">24/7</div><div class="txt">regulatory monitoring</div></div>
+        <div class="metric"><div class="num">80%</div><div class="txt">less manual compliance</div></div>
+      </div>
+      <div class="uc-grid">
+        <div class="uc-card"><h4>Compliance Monitor</h4><p>Track regulatory changes, flag impacts, alert on deadlines. Full audit trails and immutable logs.</p></div>
+        <div class="uc-card"><h4>KYC / AML Analyst</h4><p>Identity verification, sanctions screening, due diligence, reporting, and ongoing monitoring.</p></div>
+        <div class="uc-card"><h4>Contract Review Assistant</h4><p>First-pass review, clause extraction, risk flagging. The work done, not a tool to do it with.</p></div>
+        <div class="uc-card"><h4>Regulatory Reporting Agent</h4><p>Data gathering, report generation, submission tracking. Accurate, timely, audit-ready.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:40px;"><a href="#" class="btn btn-primary">Book a demo</a></div>
+    </section>
+  </div>
+</div>
+
+<!-- ==================== ACCOUNTING & TAX ==================== -->
+<div class="page" id="page-finance">
+  <div class="container">
+    <section class="sub-hero">
+      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
+      <div class="section-label">Accounting &amp; Tax</div>
+      <h1>Accelerate reporting and accuracy.</h1>
+      <p>Deploy capacity for reconciliation, expense management, and financial reporting — every number accounted for.</p>
+    </section>
+    <section class="sub-content">
+      <div class="metrics">
+        <div class="metric"><div class="num">10x</div><div class="txt">faster reporting</div></div>
+        <div class="metric"><div class="num">100%</div><div class="txt">audit-ready accuracy</div></div>
+        <div class="metric"><div class="num">80%</div><div class="txt">less manual processing</div></div>
+      </div>
+      <div class="uc-grid">
+        <div class="uc-card"><h4>Account Reconciliation Agent</h4><p>Periodic reconciliation, discrepancy detection, compliance checks, and structured audit reports.</p></div>
+        <div class="uc-card"><h4>Expense Management Assistant</h4><p>Full lifecycle — submission, extraction, policy validation, approval, reimbursement, reporting.</p></div>
+        <div class="uc-card"><h4>Financial Reporting Specialist</h4><p>Data aggregation, report generation, variance analysis. Accurate, timely, consistent.</p></div>
+        <div class="uc-card"><h4>Tax Preparation Assistant</h4><p>Document gathering, data validation, filing preparation, and deadline tracking.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:40px;"><a href="#" class="btn btn-primary">Book a demo</a></div>
+    </section>
+  </div>
+</div>
+
+<!-- ==================== SALES & MARKETING ==================== -->
+<div class="page" id="page-sales">
+  <div class="container">
+    <section class="sub-hero">
+      <div class="back-link" onclick="showPage('home')">&larr; Solutions</div>
+      <div class="section-label">Sales &amp; Marketing</div>
+      <h1>Multiply campaign effectiveness and ROI.</h1>
+      <p>Deploy capacity for lead management, market intelligence, and campaign execution — outcomes, not overhead.</p>
+    </section>
+    <section class="sub-content">
+      <div class="metrics">
+        <div class="metric"><div class="num">10x</div><div class="txt">lead follow-up capacity</div></div>
+        <div class="metric"><div class="num">24/7</div><div class="txt">pipeline coverage</div></div>
+        <div class="metric"><div class="num">3x</div><div class="txt">conversion improvement</div></div>
+      </div>
+      <div class="uc-grid">
+        <div class="uc-card"><h4>Sales Development Rep</h4><p>Lead follow-up, qualification, pipeline tracking. Every opportunity pursued, none forgotten.</p></div>
+        <div class="uc-card"><h4>Market Intelligence Analyst</h4><p>Source monitoring, relevance scoring, competitive tracking, and briefing generation.</p></div>
+        <div class="uc-card"><h4>Campaign Coordinator</h4><p>Content distribution, engagement tracking, A/B management, and performance reporting.</p></div>
+        <div class="uc-card"><h4>Lead Enrichment Agent</h4><p>Data enrichment, scoring, segmentation, and routing. Better leads, faster qualification.</p></div>
+      </div>
+      <div style="text-align:center;margin-top:40px;"><a href="#" class="btn btn-primary">Book a demo</a></div>
+    </section>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span>ExCom AI &middot; Dubai, UAE</span>
+    <a href="mailto:info@excom.ai">info@excom.ai</a>
+  </div>
+</footer>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  page.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // Re-trigger animations on sub-page elements
+  page.querySelectorAll('.metric .num, .sub-hero h1, .sub-hero > p, .back-link').forEach(el => {
+    el.style.animation = 'none';
+    el.offsetHeight;
+    el.style.animation = '';
+  });
+  initReveal();
+}
+
+function scrollTo_(id) {
+  showPage('home');
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 150);
+}
+
+function toggleMobileMenu() {
+  const nc = document.getElementById('navCenter');
+  if (nc.style.display === 'flex') {
+    nc.style.display = '';
+    return;
+  }
+  nc.style.display = 'flex';
+  nc.style.position = 'absolute';
+  nc.style.top = '60px';
+  nc.style.left = '0';
+  nc.style.right = '0';
+  nc.style.background = 'var(--bg)';
+  nc.style.padding = '20px 24px';
+  nc.style.flexDirection = 'column';
+  nc.style.borderBottom = '1px solid var(--border)';
+  nc.style.zIndex = '200';
+}
+
+// Scroll reveal
+function initReveal() {
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => {
+    el.classList.remove('visible');
+    observer.observe(el);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', initReveal);
+</script>
 
 </body>
 </html>
