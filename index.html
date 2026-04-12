@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anycast — AI Team Members for Every Group Chat</title>
+    <meta name="description" content="Anycast by ExCom.ai — Deploy isolated AI assistants into Telegram groups. Each team gets their own AI with persistent memory, file handling, and tool access.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #4FC3F7;
+            --cyan-dark: #0288D1;
+            --cyan-light: #B3E5FC;
+            --purple: #AB47BC;
+            --navy: #0F172A;
+            --slate: #64748B;
+            --white: #FFFFFF;
+            --amber: #FBBF24;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: var(--white);
+        }
+
+        .logo-text {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--white);
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span { color: var(--cyan); }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--slate);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .nav-cta {
+            background: var(--cyan);
+            color: var(--navy) !important;
+            padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 600 !important;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--cyan-dark);
+            color: var(--white) !important;
+            transform: translateY(-1px);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(79,195,247,0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(79,195,247,0.1);
+            border: 1px solid rgba(79,195,247,0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--cyan);
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--cyan);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.1s both;
+        }
+
+        h1 .highlight {
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--slate);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .cta-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--cyan);
+            color: var(--navy);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .cta-primary:hover {
+            background: var(--cyan-dark);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(79,195,247,0.3);
+        }
+
+        .cta-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--slate);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .cta-secondary:hover {
+            border-color: rgba(255,255,255,0.3);
+            color: var(--white);
+        }
+
+        /* Telegram mockup */
+        .phone-section {
+            padding: 2rem 2rem 6rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .phone {
+            width: 340px;
+            background: #1E293B;
+            border-radius: 40px;
+            padding: 12px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .phone-screen {
+            background: #0F172A;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .phone-header {
+            background: #1C2B3A;
+            padding: 2.5rem 1rem 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .phone-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.8rem;
+        }
+
+        .phone-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .phone-name small {
+            display: block;
+            font-weight: 400;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .chat-area {
+            padding: 1rem 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            min-height: 380px;
+        }
+
+        .msg {
+            max-width: 85%;
+            padding: 0.6rem 0.9rem;
+            border-radius: 12px;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            animation: msgAppear 0.5s ease both;
+        }
+
+        .msg-user {
+            align-self: flex-end;
+            background: #2B5278;
+            border-bottom-right-radius: 4px;
+        }
+
+        .msg-bot {
+            align-self: flex-start;
+            background: #1E293B;
+            border-bottom-left-radius: 4px;
+        }
+
+        .msg-time {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.4);
+            text-align: right;
+            margin-top: 0.2rem;
+        }
+
+        .msg:nth-child(1) { animation-delay: 0.5s; }
+        .msg:nth-child(2) { animation-delay: 1.2s; }
+        .msg:nth-child(3) { animation-delay: 2s; }
+        .msg:nth-child(4) { animation-delay: 3s; }
+        .msg:nth-child(5) { animation-delay: 3.8s; }
+
+        /* Features */
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .features-header h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .features-header p {
+            color: var(--slate);
+            font-size: 1.15rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(79,195,247,0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .feature-icon { font-size: 2.2rem; margin-bottom: 1rem; }
+        .feature-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .feature-card p { color: var(--slate); font-size: 0.95rem; line-height: 1.6; }
+
+        /* How it works */
+        .how {
+            padding: 6rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .how h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 3rem;
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            text-align: left;
+            background: rgba(30,41,59,0.3);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+        }
+
+        .step-num {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            background: linear-gradient(135deg, var(--cyan), var(--purple));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+
+        .step-text h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .step-text p { color: var(--slate); font-size: 0.9rem; line-height: 1.5; }
+
+        /* Use cases banner */
+        .use-cases {
+            margin: 4rem 2rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            border: 1px solid rgba(79,195,247,0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .use-cases::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(79,195,247,0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .use-cases h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            text-align: left;
+        }
+
+        .use-case-item {
+            padding: 1rem;
+        }
+
+        .use-case-item h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            color: var(--cyan);
+        }
+
+        .use-case-item p {
+            color: var(--slate);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand span { font-weight: 700; font-size: 1.1rem; }
+        footer p { color: var(--slate); font-size: 0.85rem; }
+        footer a { color: var(--cyan); text-decoration: none; }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes msgAppear {
+            from { opacity: 0; transform: translateY(10px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 7rem 1.5rem 3rem; }
+            .phone { width: 280px; }
+            .step { flex-direction: column; text-align: center; }
+            .features-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .use-case-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="logo">
+            <div class="logo-icon">A</div>
+            <span class="logo-text">any<span>cast</span></span>
+        </a>
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#how">How it works</a>
+            <a href="https://excom.ai">ExCom.ai</a>
+            <a href="#start" class="nav-cta">Get started</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Now available on Telegram
+        </div>
+        <h1>AI that joins<br><span class="highlight">your team.</span></h1>
+        <p class="hero-sub">Deploy isolated AI assistants into Telegram group chats. Each team gets their own AI with persistent memory, tools, and file handling.</p>
+        <div class="hero-cta-group">
+            <a href="#start" class="cta-primary">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                Add to Telegram
+            </a>
+            <a href="#features" class="cta-secondary">See what it does ↓</a>
+        </div>
+    </section>
+
+    <section class="phone-section">
+        <div class="phone">
+            <div class="phone-screen">
+                <div class="phone-header">
+                    <div class="phone-avatar">A</div>
+                    <div class="phone-name">
+                        Product Team
+                        <small>Anycast, Peter, Molle, Alex</small>
+                    </div>
+                </div>
+                <div class="chat-area">
+                    <div class="msg msg-user">
+                        @anycast summarize yesterday's decisions
+                        <div class="msg-time">09:15</div>
+                    </div>
+                    <div class="msg msg-bot">
+                        Yesterday's key decisions:<br><br>
+                        1. Launch date moved to June 15<br>
+                        2. Pricing: $29/mo starter, $99/mo pro<br>
+                        3. Peter owns onboarding flow<br>
+                        4. Molle to finalize landing page by Friday
+                        <div class="msg-time">09:15</div>
+                    </div>
+                    <div class="msg msg-user">
+                        Create a PDF report from the Q1 data
+                        <div class="msg-time">09:16</div>
+                    </div>
+                    <div class="msg msg-bot">
+                        Working on it. I'll send it here when ready.
+                        <div class="msg-time">09:16</div>
+                    </div>
+                    <div class="msg msg-bot">
+                        Done — Q1 report attached. 12 pages, covers revenue, churn, and pipeline.
+                        <div class="msg-time">09:17</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="features-header">
+            <h2>One AI per team.<br>Fully isolated.</h2>
+            <p>Each group chat gets a dedicated AI assistant with its own memory, workspace, and tools.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3>Container Isolation</h3>
+                <p>Every team runs in its own container. Separate memory, files, credentials, and context. Zero data leakage between groups.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>Persistent Memory</h3>
+                <p>Your AI remembers project context, API keys, team preferences, and past decisions. It gets smarter the more you use it.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📎</div>
+                <h3>File Generation</h3>
+                <p>PDFs, images, spreadsheets, presentations, code. Your AI creates files and sends them directly in the chat.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔧</div>
+                <h3>Tool Integration</h3>
+                <p>GitHub, email (Resend), Airtable, BigQuery, REST APIs. Your AI uses the same tools your team uses.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💻</div>
+                <h3>Code Execution</h3>
+                <p>Python, Node.js, shell. Your AI runs scripts, scrapes the web, queries databases, and processes data in real-time.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3>Scheduled Tasks</h3>
+                <p>Reminders, recurring reports, deadline tracking. Your AI follows up automatically so nothing falls through the cracks.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="how" id="how">
+        <h2>Up and running in 60 seconds</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                    <h3>Add Anycast to your Telegram group</h3>
+                    <p>Invite the bot. A dedicated container spins up for your team instantly.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                    <h3>Share your context</h3>
+                    <p>Give it API keys, project details, team roles. It stores them securely and uses them silently.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                    <h3>Work together</h3>
+                    <p>Everyone in the group can interact. The AI tracks context, creates files, runs code, and remembers everything.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="use-cases">
+        <h3>Built for teams that <span style="color: var(--cyan)">ship</span></h3>
+        <div class="use-case-grid">
+            <div class="use-case-item">
+                <h4>Startups</h4>
+                <p>GTM strategy, lead scraping, email campaigns, investor updates. One AI for the whole founding team.</p>
+            </div>
+            <div class="use-case-item">
+                <h4>Product Teams</h4>
+                <p>Sprint summaries, GitHub integration, bug triage, backlog generation. Ship faster with AI in the loop.</p>
+            </div>
+            <div class="use-case-item">
+                <h4>Consulting</h4>
+                <p>Client research, report generation, data analysis, competitive intelligence. Per-client isolation built in.</p>
+            </div>
+            <div class="use-case-item">
+                <h4>Research</h4>
+                <p>Literature review, data collection, API integration, visualization. Your AI analyst that never sleeps.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="hero" style="min-height: auto; padding: 4rem 2rem 6rem;" id="start">
+        <h2 style="font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -0.02em; margin-bottom: 1rem;">Ready to add AI to your team?</h2>
+        <p class="hero-sub" style="margin-bottom: 2rem;">Add Anycast to your Telegram group and start working together in seconds.</p>
+        <a href="#" class="cta-primary">
+            <svg viewBox="0 0 24 24" fill="currentColor" style="width:24px;height:24px"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            Add to Telegram
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-brand">
+            <span>anycast</span>
+        </div>
+        <p>by <a href="https://excom.ai" target="_blank">ExCom.ai</a></p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">&copy; 2026 ExCom.ai. All rights reserved. · <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+
+</body>
+</html>
