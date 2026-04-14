@@ -191,7 +191,7 @@
   .dropdown-menu {
     opacity: 0; visibility: hidden; position: absolute; top: 36px; left: 50%; transform: translateX(-50%) translateY(8px);
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-    padding: 20px 0; min-width: 440px; z-index: 200; display: flex;
+    padding: 24px 0; min-width: 620px; z-index: 200; display: flex;
     box-shadow: 0 12px 40px rgba(0,0,0,0.5);
     transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
   }
@@ -203,11 +203,15 @@
     color: var(--dark-gray); margin-bottom: 12px;
   }
   .dropdown-col a {
-    display: block; padding: 7px 0; font-size: 13px; color: var(--light);
-    text-transform: none; letter-spacing: 0; font-weight: 400; transition: all 0.2s;
-    padding-left: 0;
+    display: block; padding: 12px 0; font-size: 14px; color: var(--white);
+    text-transform: none; letter-spacing: 0; font-weight: 600; transition: all 0.2s;
+    padding-left: 0; line-height: 1.2;
+  }
+  .dropdown-col a .dropdown-desc {
+    display: block; font-size: 12px; color: var(--gray); font-weight: 400; margin-top: 3px;
   }
   .dropdown-col a:hover { color: var(--cyan); padding-left: 6px; }
+  .dropdown-col a:hover .dropdown-desc { color: var(--light); }
   .btn {
     display: inline-block; padding: 10px 24px; border-radius: 6px;
     font-weight: 600; font-size: 13px; cursor: pointer; border: none; transition: all 0.3s;
@@ -562,19 +566,19 @@
         <div class="dropdown-menu" role="menu">
           <div class="dropdown-col">
             <h4>By Industry</h4>
-            <a href="#" onclick="showPage('banking')" role="menuitem">Banking</a>
-            <a href="#" onclick="showPage('healthcare')" role="menuitem">Healthcare</a>
-            <a href="#" onclick="showPage('insurance')" role="menuitem">Insurance</a>
-            <a href="#" onclick="showPage('telecom')" role="menuitem">Telecom</a>
-            <a href="#" onclick="showPage('energy')" role="menuitem">Energy</a>
+            <a href="#" onclick="showPage('banking')" role="menuitem">Banking<span class="dropdown-desc">Boost lending and service efficiency</span></a>
+            <a href="#" onclick="showPage('healthcare')" role="menuitem">Healthcare<span class="dropdown-desc">Improve care delivery and patient flow</span></a>
+            <a href="#" onclick="showPage('insurance')" role="menuitem">Insurance<span class="dropdown-desc">Optimize claims and policy processes</span></a>
+            <a href="#" onclick="showPage('telecom')" role="menuitem">Telecom<span class="dropdown-desc">Enhance network and service operations</span></a>
+            <a href="#" onclick="showPage('energy')" role="menuitem">Energy<span class="dropdown-desc">Optimize field and safety operations</span></a>
           </div>
           <div class="dropdown-col">
-            <h4>By Solution</h4>
-            <a href="#" onclick="showPage('support')" role="menuitem">Support &amp; Helpdesk</a>
-            <a href="#" onclick="showPage('hr')" role="menuitem">Operations &amp; HR</a>
-            <a href="#" onclick="showPage('compliance')" role="menuitem">Compliance &amp; Regulatory</a>
-            <a href="#" onclick="showPage('finance')" role="menuitem">Accounting &amp; Tax</a>
-            <a href="#" onclick="showPage('sales')" role="menuitem">Sales &amp; Marketing</a>
+            <h4>By Category</h4>
+            <a href="#" onclick="showPage('support')" role="menuitem">Customer Support<span class="dropdown-desc">Improve service speed and quality</span></a>
+            <a href="#" onclick="showPage('hr')" role="menuitem">HR Operations<span class="dropdown-desc">Automate workforce processes</span></a>
+            <a href="#" onclick="showPage('compliance')" role="menuitem">Compliance &amp; Regulatory<span class="dropdown-desc">Reduce risk with automated controls</span></a>
+            <a href="#" onclick="showPage('finance')" role="menuitem">Finance &amp; Accounting<span class="dropdown-desc">Accelerate reporting and financial accuracy</span></a>
+            <a href="#" onclick="showPage('sales')" role="menuitem">Sales &amp; Marketing<span class="dropdown-desc">Multiply campaign effectiveness and ROI</span></a>
           </div>
         </div>
       </div>
