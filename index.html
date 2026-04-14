@@ -191,7 +191,7 @@
   .dropdown-menu {
     opacity: 0; visibility: hidden; position: absolute; top: 36px; left: 50%; transform: translateX(-50%) translateY(8px);
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-    padding: 20px 0; min-width: 440px; z-index: 200;
+    padding: 20px 0; min-width: 440px; z-index: 200; display: flex;
     box-shadow: 0 12px 40px rgba(0,0,0,0.5);
     transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
   }
@@ -233,6 +233,10 @@
   .mobile-menu a:hover { color: var(--cyan); }
   .mobile-menu .mobile-section { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--dark-gray); text-transform: uppercase; padding: 20px 0 8px; }
   .mobile-menu .btn { margin-top: 20px; text-align: center; }
+  .mobile-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .mobile-col { display: flex; flex-direction: column; }
+  .mobile-col a { border-bottom: none; padding: 10px 0; font-size: 14px; }
+  .mobile-col .mobile-section { padding-top: 12px; }
   @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
 
   @media (max-width: 768px) {
@@ -587,18 +591,24 @@
 <!-- Mobile menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#" onclick="scrollTo_('trust');closeMobile()">Trust</a>
-  <div class="mobile-section">Industries</div>
-  <a href="#" onclick="showPage('banking');closeMobile()">Banking</a>
-  <a href="#" onclick="showPage('healthcare');closeMobile()">Healthcare</a>
-  <a href="#" onclick="showPage('insurance');closeMobile()">Insurance</a>
-  <a href="#" onclick="showPage('telecom');closeMobile()">Telecom</a>
-  <a href="#" onclick="showPage('energy');closeMobile()">Energy</a>
-  <div class="mobile-section">Solutions</div>
-  <a href="#" onclick="showPage('support');closeMobile()">Support &amp; Helpdesk</a>
-  <a href="#" onclick="showPage('hr');closeMobile()">Operations &amp; HR</a>
-  <a href="#" onclick="showPage('compliance');closeMobile()">Compliance &amp; Regulatory</a>
-  <a href="#" onclick="showPage('finance');closeMobile()">Accounting &amp; Tax</a>
-  <a href="#" onclick="showPage('sales');closeMobile()">Sales &amp; Marketing</a>
+  <div class="mobile-columns">
+    <div class="mobile-col">
+      <div class="mobile-section">Industries</div>
+      <a href="#" onclick="showPage('banking');closeMobile()">Banking</a>
+      <a href="#" onclick="showPage('healthcare');closeMobile()">Healthcare</a>
+      <a href="#" onclick="showPage('insurance');closeMobile()">Insurance</a>
+      <a href="#" onclick="showPage('telecom');closeMobile()">Telecom</a>
+      <a href="#" onclick="showPage('energy');closeMobile()">Energy</a>
+    </div>
+    <div class="mobile-col">
+      <div class="mobile-section">Solutions</div>
+      <a href="#" onclick="showPage('support');closeMobile()">Support &amp; Helpdesk</a>
+      <a href="#" onclick="showPage('hr');closeMobile()">Operations &amp; HR</a>
+      <a href="#" onclick="showPage('compliance');closeMobile()">Compliance &amp; Regulatory</a>
+      <a href="#" onclick="showPage('finance');closeMobile()">Accounting &amp; Tax</a>
+      <a href="#" onclick="showPage('sales');closeMobile()">Sales &amp; Marketing</a>
+    </div>
+  </div>
   <a href="#" onclick="scrollTo_('insights');closeMobile()">Insights</a>
   <a href="https://anycast.excom.ai/signin/" style="color:var(--cyan);">Sign in</a>
   <a href="https://outlook.office.com/book/AnyCastWedontsellsoftwareWedeployteammembers@excom.ai/s/A_hROjEEVkWPP37YJgKXNQ2" target="_blank" class="btn btn-primary">Book a Demo</a>
