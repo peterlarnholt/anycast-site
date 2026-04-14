@@ -374,9 +374,29 @@
 
   /* METRICS with counter animation */
   .metrics { display: flex; gap: 40px; justify-content: center; margin: 32px 0; flex-wrap: wrap; }
-  .metric { text-align: center; }
-  .metric .num { font-size: 36px; font-weight: 800; color: var(--cyan); }
-  .metric .txt { font-size: 11px; color: var(--gray); margin-top: 2px; }
+  .metric {
+    text-align: center; padding: 24px 28px; border-radius: 12px;
+    border: 1px solid transparent; transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+    opacity: 0; transform: translateY(20px);
+  }
+  .metric.animate-in {
+    opacity: 1; transform: translateY(0);
+  }
+  .metric:hover {
+    border-color: rgba(0,180,216,0.3); background: rgba(0,180,216,0.04);
+    box-shadow: 0 0 30px rgba(0,180,216,0.1); transform: scale(1.05);
+  }
+  .metric .num {
+    font-size: 42px; font-weight: 800; color: var(--cyan);
+    display: inline-block; transition: transform 0.3s;
+  }
+  .metric .num-suffix {
+    font-size: 28px; font-weight: 700; color: var(--cyan);
+    display: inline-block; opacity: 0; transform: scale(0.5);
+    transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .metric .num-suffix.pop { opacity: 1; transform: scale(1); }
+  .metric .txt { font-size: 12px; color: var(--gray); margin-top: 6px; }
 
   /* USE CASE CARDS */
   .uc-grid {
@@ -531,8 +551,10 @@
     .hero .subtitle { font-size: 15px; }
     .badges { gap: 10px; }
     .badge { font-size: 11px; padding: 6px 12px; }
-    .metrics { gap: 24px; }
-    .metric .num { font-size: 28px; }
+    .metrics { gap: 16px; }
+    .metric { padding: 16px 20px; }
+    .metric .num { font-size: 32px; }
+    .metric .num-suffix { font-size: 22px; }
     .uc-grid { grid-template-columns: 1fr; }
     .ba-row { grid-template-columns: 1fr; }
     .ba-arrow { transform: rotate(90deg); padding: 8px 0; }
@@ -714,9 +736,9 @@
       <h2>Built on 5+ years of enterprise AI.</h2>
       <p class="lead" style="max-width:620px;margin-left:auto;margin-right:auto;">Anycast is the deployment layer of ExCom.ai — a governed decision and execution platform for high-stakes environments. Trusted by governments, telecoms, manufacturers, and sports organizations across 3 continents. Every Anycast team member runs on battle-tested infrastructure: executable business rules, persistent memory, predictive analytics, governed decision engines, and full audit traceability.</p>
       <div class="metrics" style="margin-top:32px;">
-        <div class="metric"><div class="num" data-count="60">0</div><div class="txt">% faster decisions</div></div>
-        <div class="metric"><div class="num" data-count="70">0</div><div class="txt">% less manual reporting</div></div>
-        <div class="metric"><div class="num" data-count="40">0</div><div class="txt">% productivity gain</div></div>
+        <div class="metric"><div><span class="num" data-count="60" data-suffix="%">0</span><span class="num-suffix">%</span></div><div class="txt">faster decisions</div></div>
+        <div class="metric"><div><span class="num" data-count="70" data-suffix="%">0</span><span class="num-suffix">%</span></div><div class="txt">less manual reporting</div></div>
+        <div class="metric"><div><span class="num" data-count="40" data-suffix="%">0</span><span class="num-suffix">%</span></div><div class="txt">productivity gain</div></div>
       </div>
       <p style="font-size:11px;color:var(--dark-gray);margin-top:12px;">Observed across pilots and production deployments.</p>
     </section>
@@ -983,21 +1005,33 @@ function closeMobile() {
   document.getElementById('mobileMenu').classList.remove('open');
 }
 
-// Counter animation
+// Counter animation with staggered entrance and suffix pop
 function animateCounters(container) {
-  container.querySelectorAll('.num[data-count]').forEach(el => {
-    const target = parseInt(el.dataset.count);
-    const duration = 1200;
-    const start = performance.now();
-    el.textContent = '0';
-    function update(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(target * eased);
-      if (progress < 1) requestAnimationFrame(update);
-    }
-    requestAnimationFrame(update);
+  const metrics = container.querySelectorAll('.metric');
+  metrics.forEach((metric, i) => {
+    setTimeout(() => {
+      metric.classList.add('animate-in');
+      const el = metric.querySelector('.num[data-count]');
+      if (!el) return;
+      const target = parseInt(el.dataset.count);
+      const suffix = metric.querySelector('.num-suffix');
+      const duration = 1400;
+      const start = performance.now();
+      el.textContent = '0';
+      if (suffix) suffix.classList.remove('pop');
+      function update(now) {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(target * eased);
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          if (suffix) suffix.classList.add('pop');
+        }
+      }
+      requestAnimationFrame(update);
+    }, i * 200);
   });
 }
 
