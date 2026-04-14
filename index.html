@@ -1005,7 +1005,12 @@ function animateCounters(container) {
 function initReveal() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('visible');
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        if (entry.target.querySelectorAll('.num[data-count]').length > 0) {
+          animateCounters(entry.target);
+        }
+      }
     });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => {
