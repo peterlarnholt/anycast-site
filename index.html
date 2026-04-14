@@ -306,10 +306,11 @@
 
   /* SOL GRID */
   .sol-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-    text-align: left; max-width: 700px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1px 1fr; gap: 32px;
+    text-align: left; max-width: 740px; margin: 0 auto;
   }
-  @media (max-width: 640px) { .sol-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .sol-grid .sol-divider { background: var(--border); }
+  @media (max-width: 640px) { .sol-grid { grid-template-columns: 1fr; gap: 32px; } .sol-grid .sol-divider { display: none; } }
   .sol-col h3 {
     font-size: 11px; font-weight: 700; letter-spacing: 2px;
     color: var(--dark-gray); text-transform: uppercase; margin-bottom: 16px;
@@ -698,6 +699,7 @@
           <div class="sol-item" onclick="showPage('telecom')" role="link" tabindex="0"><div class="sol-title">Telecom</div><div class="sol-desc">Enhance network and service operations</div></div>
           <div class="sol-item" onclick="showPage('energy')" role="link" tabindex="0"><div class="sol-title">Energy</div><div class="sol-desc">Optimize field and safety operations</div></div>
         </div>
+        <div class="sol-divider"></div>
         <div class="sol-col">
           <h3>By Solution</h3>
           <div class="sol-item" onclick="showPage('support')" role="link" tabindex="0"><div class="sol-title">Support &amp; Helpdesk</div><div class="sol-desc">Improve service speed and quality</div></div>
