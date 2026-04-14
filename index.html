@@ -2,6 +2,7 @@
 <html lang="en" itemscope itemtype="https://schema.org/WebSite">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/png" href="favicon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <!-- Microsoft Clarity -->
 <script type="text/javascript">
@@ -390,12 +391,6 @@
     font-size: 42px; font-weight: 800; color: var(--cyan);
     display: inline-block; transition: transform 0.3s;
   }
-  .metric .num-suffix {
-    font-size: 28px; font-weight: 700; color: var(--cyan);
-    display: inline-block; opacity: 0; transform: scale(0.5);
-    transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  .metric .num-suffix.pop { opacity: 1; transform: scale(1); }
   .metric .txt { font-size: 12px; color: var(--gray); margin-top: 6px; }
 
   /* USE CASE CARDS */
@@ -554,7 +549,6 @@
     .metrics { gap: 16px; }
     .metric { padding: 16px 20px; }
     .metric .num { font-size: 32px; }
-    .metric .num-suffix { font-size: 22px; }
     .uc-grid { grid-template-columns: 1fr; }
     .ba-row { grid-template-columns: 1fr; }
     .ba-arrow { transform: rotate(90deg); padding: 8px 0; }
@@ -736,9 +730,9 @@
       <h2>Built on 5+ years of enterprise AI.</h2>
       <p class="lead" style="max-width:620px;margin-left:auto;margin-right:auto;">Anycast is the deployment layer of ExCom.ai — a governed decision and execution platform for high-stakes environments. Trusted by governments, telecoms, manufacturers, and sports organizations across 3 continents. Every Anycast team member runs on battle-tested infrastructure: executable business rules, persistent memory, predictive analytics, governed decision engines, and full audit traceability.</p>
       <div class="metrics" style="margin-top:32px;">
-        <div class="metric"><div><span class="num" data-count="60" data-suffix="%">0</span><span class="num-suffix">%</span></div><div class="txt">faster decisions</div></div>
-        <div class="metric"><div><span class="num" data-count="70" data-suffix="%">0</span><span class="num-suffix">%</span></div><div class="txt">less manual reporting</div></div>
-        <div class="metric"><div><span class="num" data-count="40" data-suffix="%">0</span><span class="num-suffix">%</span></div><div class="txt">productivity gain</div></div>
+        <div class="metric"><div class="num" data-count="60" data-suffix="%">0%</div><div class="txt">faster decisions</div></div>
+        <div class="metric"><div class="num" data-count="70" data-suffix="%">0%</div><div class="txt">less manual reporting</div></div>
+        <div class="metric"><div class="num" data-count="40" data-suffix="%">0%</div><div class="txt">productivity gain</div></div>
       </div>
       <p style="font-size:11px;color:var(--dark-gray);margin-top:12px;">Observed across pilots and production deployments.</p>
     </section>
@@ -1005,7 +999,7 @@ function closeMobile() {
   document.getElementById('mobileMenu').classList.remove('open');
 }
 
-// Counter animation with staggered entrance and suffix pop
+// Counter animation with staggered entrance
 function animateCounters(container) {
   const metrics = container.querySelectorAll('.metric');
   metrics.forEach((metric, i) => {
@@ -1014,21 +1008,16 @@ function animateCounters(container) {
       const el = metric.querySelector('.num[data-count]');
       if (!el) return;
       const target = parseInt(el.dataset.count);
-      const suffix = metric.querySelector('.num-suffix');
+      const suffix = el.dataset.suffix || '';
       const duration = 1400;
       const start = performance.now();
-      el.textContent = '0';
-      if (suffix) suffix.classList.remove('pop');
+      el.textContent = '0' + suffix;
       function update(now) {
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = Math.round(target * eased);
-        if (progress < 1) {
-          requestAnimationFrame(update);
-        } else {
-          if (suffix) suffix.classList.add('pop');
-        }
+        el.textContent = Math.round(target * eased) + suffix;
+        if (progress < 1) requestAnimationFrame(update);
       }
       requestAnimationFrame(update);
     }, i * 200);
